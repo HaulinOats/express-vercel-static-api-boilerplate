@@ -1,0 +1,4 @@
+- Switch Gmail to yahoo account for site messenger
+- Fill in content
+- Switch Square over to Sandy's account
+- Setup Github and Vercel accounts to transfer site
