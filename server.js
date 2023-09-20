@@ -7,6 +7,38 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
+app.post("/payment", async () => {
+  try {
+    console.log(req.body);
+
+    //   const response = await client.paymentsApi.createPayment({
+    //     sourceId: "cnon:card-nonce-ok",
+    //     idempotencyKey: "323c2111-159f-4c2e-bb5d-18d8d965c9c2",
+    //     amountMoney: {
+    //       amount: req.body.amountMoney.amount,
+    //       currency: "USD"
+    //     },
+    //     autocomplete: true,
+    //     acceptPartialAuthorization: false,
+    //     buyerEmailAddress: "midgitsuu@gmail.com",
+    //     billingAddress: {
+    //       addressLine1: "365 Forestway Circle",
+    //       addressLine2: "Unit 203",
+    //       locality: "Altamonte Springs",
+    //       postalCode: "32701",
+    //       country: "US",
+    //       firstName: "Brett",
+    //       lastName: "Connolly"
+    //     }
+    //   });
+
+    //   console.log(response.result);
+    // } catch (error) {
+    //   console.log(error);
+  } catch (err) {
+    console.log(err);
+  }
+});
 app.post("/message", (req, res) => {
   const nodemailer = require("nodemailer");
 

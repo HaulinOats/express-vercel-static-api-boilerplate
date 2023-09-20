@@ -11156,3 +11156,20 @@ blockquote cite:before {
   }
 }
 /*# sourceMappingURL=style.css.map */
+/* custom CSS */
+#packageDetails {
+    border: solid 2px orange;
+    display: none;
+    background: white;
+    padding: 2%;
+    border-radius: 7px;
+}
+#packageDetails p {
+  margin-bottom:5px;
+}
+#packageDetails p:last-child {
+  margin-bottom:0;
+}
+#payment-form {
+  /* display:none; */
+}
