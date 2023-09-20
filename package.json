@@ -1,0 +1,28 @@
+{
+  "name": "codingwithsandy",
+  "version": "1.0.0",
+  "description": "Coding With Sandy CPC Certification",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HaulinOats/CodingWithSandy.com.git"
+  },
+  "keywords": [
+    "coding",
+    "sandy",
+    "cpc",
+    "certification"
+  ],
+  "author": "Brett Connolly",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HaulinOats/CodingWithSandy.com/issues"
+  },
+  "homepage": "https://github.com/HaulinOats/CodingWithSandy.com#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
