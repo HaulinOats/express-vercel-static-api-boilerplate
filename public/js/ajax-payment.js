@@ -1,4 +1,4 @@
-(function ($) {
+(async function ($) {
   "use strict";
   //load packages into select
   var form = ".ajax-payment";
@@ -6,39 +6,45 @@
   var $email = '[name="email"]';
   var $validation = '[name="name"],[name="email"],[name="message"]'; // Must be use (,) without any space
   var formMessages = $(".form-messages");
-  var packages = [
-    {
-      name: "Course Package 1",
-      description: "This is the description for Course Package 1",
-      cost: 800
-    },
-    {
-      name: "Course Package 2",
-      description: "This is the description for Course Package 2",
-      cost: 1200
-    },
-    {
-      name: "Course Package 3",
-      description: "This is the description for Course Package 3",
-      cost: 1800
-    }
-  ];
-  var packageSelectHTML = "";
+
+  //get package info from JSON file and populate dropdown for selecting packages on signup.html page
+  let packages = await fetch("./packages.json")
+    .then((data) => data.json())
+    .catch((err) => console.log(`error getting package data: ${err}`));
+  console.log(packages);
+  let packageSelectHTML = "";
   packages.forEach((pkg, i) => {
-    packageSelectHTML += `<option value="${i}">${pkg.name} - $${pkg.cost.toFixed(2)}</option>`;
+    packageSelectHTML += `<option value="${i}">${pkg.name} - $${pkg.total.toFixed(2)}</option>`;
   });
   $("#packageSelect").append(packageSelectHTML);
 
+  //when selecting a package from dropdown, display table breakdown
   $("#packageSelect").on("change", (e) => {
-    let index = parseInt(e.currentTarget.value);
-    console.log(e.currentTarget.value);
-    let detailsHTML = `
-      <p><b>Package: </b>${packages[index].name}</p>
-      <p><b>Description: </b>${packages[index].description}</p>
-      <p><b>Cost: </b>$${packages[index].cost.toFixed(2)}</p>
-    `;
-    $("#packageDetails").html(detailsHTML).show();
-    $("#payment-total").html(`Total: $${packages[index].cost.toFixed(2)}`);
+    let packageIndex = parseInt(e.currentTarget.value);
+    let currentPackage = packages[packageIndex];
+    let tableEl = document.createElement("table");
+    tableEl.classList.add(["table", "table-responsive-lg"]);
+    tableEl.append(`<tr>
+      <th>Due Time</th>
+      <th>Description</th>
+      <th>Cost</th>
+    </tr>`);
+    let rowHTML = "";
+    currentPackage.rowItems.forEach((row) => {
+      rowHTML += `<tr>
+        <td>${row.due}</td>
+        <td>${row.description}</td>
+        <td>$${row.cost.toFixed(2)}</td>
+      </tr>`;
+    });
+    rowHTML += `<tr>
+      <td></td>
+      <td class="fw-bold">Total</td>
+      <td class="fw-bold">$${currentPackage.total.toFixed(2)}</td>
+    </tr>`;
+    tableEl.innerHTML = rowHTML;
+    $("#packageDetails").html("").append(tableEl).show();
+    $("#payment-total").html(`Total: $${currentPackage.total.toFixed(2)}`);
     $("#payment-form").show();
   });
 

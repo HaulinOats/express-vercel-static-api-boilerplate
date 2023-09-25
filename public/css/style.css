@@ -11158,10 +11158,9 @@ blockquote cite:before {
 /*# sourceMappingURL=style.css.map */
 /* custom CSS */
 #packageDetails {
-    border: solid 2px orange;
+    box-shadow:1px 1px 3px;
     display: none;
     background: white;
-    padding: 2%;
     border-radius: 7px;
 }
 #packageDetails p {
