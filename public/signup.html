@@ -315,8 +315,22 @@
                     <form action="/payment" method="POST" class="ajax-payment form-wrap3 mb-30" data-bg-color="#f3f6f7"
                         style="background-color: rgb(243, 246, 247);">
                         <div class="form-title">
-                            <h3 class="mt-n2 fls-n2 mb-10">Payment Information</h3>
+                            <h3 class="mt-n2 fls-n2 mb-10">Course Information and Payment</h3>
                         </div>
+                        <div class="col-md-12 form-group">
+                            <p class="text-theme mb-4">Select a package and verify it is the correct one below before
+                                submitting payment. You will be responsible for purchasing course books.</p>
+                            <div class="col-md-12 form-group">
+                                <select id="packageSelect" class="form-select style2">
+                                    <option hidden="" disabled="disabled" selected="selected">Select Package</option>
+                                </select>
+                            </div>
+                            <div>
+                                <p class="text-theme"></p>
+                                <div id="packageDetails" class="mb-15"></div>
+                            </div>
+                        </div>
+                        <hr>
                         <div class="row">
                             <div class="col-md-6 form-group mb-15">
                                 <input type="text" class="form-control style3" name="name" id="name" placeholder="Name">
@@ -407,20 +421,6 @@
                             <div class="col-md-4 form-group mb-30">
                                 <input type="text" class="form-control style3" name="postalCode" id="postalCode"
                                     placeholder="Zipcode"> <i class="fal fa-map-pin"></i>
-                            </div>
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <p class="text-theme mb-4">Select a package and verify it is the correct one below before
-                                submitting payment. You will be responsible for purchasing course books detailed in the
-                                description.</p>
-                            <div class="col-md-12 form-group">
-                                <select id="packageSelect" class="form-select style2">
-                                    <option hidden="" disabled="disabled" selected="selected">Select Package</option>
-                                </select>
-                            </div>
-                            <div>
-                                <p class="text-theme"></p>
-                                <div id="packageDetails" class="mb-15"></div>
                             </div>
                         </div>
                         <hr>
