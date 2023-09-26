@@ -22,28 +22,6 @@
     "total": 1
   },
   {
-    "name": "Pay as you Go",
-    "isRegistration": true,
-    "rowItems": [
-      {
-        "due": "Due on or before Start of MT Class",
-        "description": "Medical Terminology &amp; Anatomy",
-        "cost": 500
-      },
-      {
-        "due": "Due on or before start of ICD-10 Class",
-        "description": "ICD10 CM 2022",
-        "cost": 550
-      },
-      {
-        "due": "Due on or before start of CPT Class",
-        "description": "Current Procedural Terminology (CPT)",
-        "cost": 550
-      }
-    ],
-    "total": 1700
-  },
-  {
     "name": "Pay in Full",
     "isRegistration": true,
     "rowItems": [
@@ -64,6 +42,28 @@
       }
     ],
     "total": 1600
+  },
+  {
+    "name": "Pay as you Go",
+    "isRegistration": true,
+    "rowItems": [
+      {
+        "due": "Due on or before Start of MT Class",
+        "description": "Medical Terminology &amp; Anatomy",
+        "cost": 500
+      },
+      {
+        "due": "Due on or before start of ICD-10 Class",
+        "description": "ICD10 CM 2022",
+        "cost": 550
+      },
+      {
+        "due": "Due on or before start of CPT Class",
+        "description": "Current Procedural Terminology (CPT)",
+        "cost": 550
+      }
+    ],
+    "total": 1700
   },
   {
     "name": "Pay as you Go (ICD10 and CPT Courses)",

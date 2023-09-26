@@ -145,8 +145,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       paymentButton.disabled = false;
       document.querySelector("#payment-status-container").innerHTML = `
         <h4 class="text-danger mt-15">Payment Failed</h4>
-        <p class="text-danger fs-6">There was an error processing your payment.</p>
-        <p class="text-danger fs-6">Please <u><a href="./index.html#contact">contact me</a></u> if problem persists.</p>
+        <p class="text-danger fs-6">There was an error processing your payment. Please <u><a href="./index.html#contact">contact me</a></u> if problem persists.</p>
       `;
       console.error(e.message);
     }
@@ -155,30 +154,40 @@ document.addEventListener("DOMContentLoaded", async function () {
   const paymentButton = document.querySelector(".send-payment");
   paymentButton.addEventListener("click", async function (event) {
     event.preventDefault();
-    if (!formIsValidated()) return;
+    if (!formValidated()) return;
     await handlePaymentMethodSubmission(event, card, true);
   });
 });
 
-function formIsValidated() {
-  const inputNames = ["email", "firstname", "lastname", "phone", "addressLine1", "addressLine2", "locality", "postalCode"];
+//revalidate when unfocusing element
+let validated = true;
+const formElements = document.querySelectorAll(".ajax-payment [name]");
+formElements.forEach((el) => {
+  el.addEventListener("blur", (e) => {
+    validateFormElement(e.currentTarget);
+  });
+});
 
-  let validated = true;
-  inputNames.forEach((name) => {
-    validateFormElement(name);
+function formValidated() {
+  validated = true;
+  formElements.forEach((el) => {
+    validateFormElement(el);
   });
 
   return validated;
+}
 
-  function validateFormElement(name) {
-    const formElement = document.querySelector(`[name="${name}"]`);
-    const value = formElement.value;
-    if (!value.length) {
-      validated = false;
-      formElement.classList.add("is-invalid");
-      formElement.scrollIntoView({ behavior: "smooth", block: "center" });
-    } else {
-      formElement.classList.remove("is-invalid");
-    }
+function validateFormElement(element) {
+  const isRequired = parseInt(element.dataset.isRequired);
+  if (!isRequired) return;
+
+  const value = element.value;
+
+  if (!value.length) {
+    validated = false;
+    element.classList.add("is-invalid");
+    element.scrollIntoView({ behavior: "smooth", block: "center" });
+  } else {
+    element.classList.remove("is-invalid");
   }
 }

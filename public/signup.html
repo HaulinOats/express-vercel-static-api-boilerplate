@@ -321,10 +321,13 @@
                         </div>
                         <div class="col-md-12 form-group">
                             <p class="text-theme mb-4">Select a package and verify it is the correct one below before
-                                submitting payment. You will be responsible for purchasing course books.</p>
+                                submitting payment. You will be responsible for purchasing course books. "Pay in Full"
+                                options waive $100 registration fee.</p>
                             <div class="col-md-12 form-group">
-                                <select id="packageSelect" class="form-select style2">
-                                    <option hidden="" disabled="disabled" selected="selected">Select Package</option>
+                                <select data-is-required="1" name="package-select" id="packageSelect"
+                                    class="form-select style2">
+                                    <option hidden="" disabled="disabled" selected="selected" value="">Select Package
+                                    </option>
                                 </select>
                             </div>
                             <div>
@@ -335,45 +338,44 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-6 form-group mb-15">
-                                <input type="text" class="form-control style3" name="email" id="email"
-                                    placeholder="E-mail">
+                                <input type="text" class="form-control style3" data-is-required="1" name="email"
+                                    id="email" placeholder="E-mail">
                                 <i class="fal fa-envelope"></i>
                             </div>
                             <div class="col-md-6 form-group mb-15">
-                                <input type="text" class="form-control style3" name="phone" id="phone"
-                                    placeholder="Phone Number">
+                                <input type="text" class="form-control style3" data-is-required="1" name="phone"
+                                    id="phone" placeholder="Phone Number">
                                 <i class="fal fa-phone"></i>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-group mb-15">
-                                <input type="text" class="form-control style3" name="firstname" id="firstname"
-                                    placeholder="First Name">
+                                <input type="text" class="form-control style3" data-is-required="1" name="firstname"
+                                    id="firstname" placeholder="First Name">
                                 <i class="fal fa-user"></i>
                             </div>
                             <div class="col-md-6 form-group mb-15">
-                                <input type="text" class="form-control style3" name="lastname" id="lastname"
-                                    placeholder="Last Name">
+                                <input type="text" class="form-control style3" data-is-required="1" name="lastname"
+                                    id="lastname" placeholder="Last Name">
                                 <i class="fal fa-user"></i>
                             </div>
                         </div>
                         <div class="col-md-12 form-group mb-15">
-                            <input type="text" class="form-control style3" name="addressLine1" id="addressLine1"
-                                placeholder="Address Line 1"> <i class="fal fa-road"></i>
+                            <input type="text" class="form-control style3" data-is-required="1" name="addressLine1"
+                                id="addressLine1" placeholder="Address Line 1"> <i class="fal fa-road"></i>
                         </div>
                         <div class="col-md-12 form-group mb-15">
-                            <input type="text" class="form-control style3" name="addressLine2" id="addressLine2"
-                                placeholder="Address Line 2"> <i class="fal fa-road"></i>
+                            <input type="text" class="form-control style3" data-is-required="1" name="addressLine2"
+                                id="addressLine2" placeholder="Address Line 2"> <i class="fal fa-road"></i>
                         </div>
                         <div class="row">
                             <div class="col-md-4 form-group mb-15">
-                                <input type="text" class="form-control style3" name="locality" id="locality"
-                                    placeholder="City">
+                                <input type="text" class="form-control style3" data-is-required="1" name="locality"
+                                    id="locality" placeholder="City">
                                 <i class="fal fa-building"></i>
                             </div>
                             <div class="col-md-4 form-group mb-15">
-                                <select name="state" id="state-select" class="form-select style2">
-                                    <option hidden="" disabled="disabled" selected="selected">Select State</option>
+                                <select data-is-required="0" name="state" id="state-select" class="form-select style2">
                                     <option value="AL">AL</option>
                                     <option value="AK">AK</option>
                                     <option value="AS">AS</option>
@@ -436,8 +438,8 @@
                                 </select>
                             </div>
                             <div class="col-md-4 form-group mb-30">
-                                <input type="text" class="form-control style3" name="postalCode" id="postalCode"
-                                    placeholder="Zipcode"> <i class="fal fa-map-pin"></i>
+                                <input type="text" class="form-control style3" data-is-required="1" name="postalCode"
+                                    id="postalCode" placeholder="Zipcode"> <i class="fal fa-map-pin"></i>
                             </div>
                         </div>
                         <hr>
@@ -452,8 +454,9 @@
                         <hr>
                         <div class="form-group mb-15">
                             <p class="text-theme">Additional notes or questions</p>
-                            <textarea name="message" id="message" cols="30" rows="3" class="form-control style3"
-                                placeholder="Message"></textarea> <i class="fal fa-pencil-alt"></i>
+                            <textarea data-is-required="0" name="message" id="message" cols="30" rows="3"
+                                class="form-control style3" placeholder="Message"></textarea> <i
+                                class="fal fa-pencil-alt"></i>
                         </div>
                         <div class="form-btn pt-15"><button class="vs-btn style2 send-payment">Send Payment<i
                                     class="fas fa-chevron-right"></i></button></div>
