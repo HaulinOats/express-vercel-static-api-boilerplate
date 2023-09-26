@@ -1,25 +1,47 @@
 [
   {
+    "name": "TEST",
+    "isRegistration": true,
+    "rowItems": [
+      {
+        "due": "Due at this time",
+        "description": "Test description",
+        "cost": 500
+      },
+      {
+        "due": "Due at another time",
+        "description": "Test description",
+        "cost": 550
+      },
+      {
+        "due": "Due at latest time",
+        "description": "Test description",
+        "cost": 550
+      }
+    ],
+    "total": 1
+  },
+  {
     "name": "Pay as you Go",
     "isRegistration": true,
     "rowItems": [
       {
         "due": "Due on or before Start of MT Class",
         "description": "Medical Terminology &amp; Anatomy",
-        "cost": 500.0
+        "cost": 500
       },
       {
         "due": "Due on or before start of ICD-10 Class",
         "description": "ICD10 CM 2022",
-        "cost": 550.0
+        "cost": 550
       },
       {
         "due": "Due on or before start of CPT Class",
         "description": "Current Procedural Terminology (CPT)",
-        "cost": 550.0
+        "cost": 550
       }
     ],
-    "total": 1700.0
+    "total": 1700
   },
   {
     "name": "Pay in Full",
@@ -28,17 +50,17 @@
       {
         "due": "Pay Class in full prior to start of class",
         "description": "Medical Terminology &amp; Anatomy",
-        "cost": 500.0
+        "cost": 500
       },
       {
         "due": "",
         "description": "ICD10 CM 2022",
-        "cost": 500.0
+        "cost": 500
       },
       {
         "due": "",
         "description": "Current Procedural Terminology (CPT)",
-        "cost": 500.0
+        "cost": 500
       }
     ],
     "total": 1600
@@ -50,12 +72,12 @@
       {
         "due": "Due on or before start of ICD-10 Class",
         "description": "ICD10 CM 2022",
-        "cost": 600.0
+        "cost": 600
       },
       {
         "due": "Due on or before start of CPT Class",
         "description": "Current Procedural Terminology (CPT)",
-        "cost": 600.0
+        "cost": 600
       }
     ],
     "total": 1300
@@ -67,12 +89,12 @@
       {
         "due": "PAID in Full prior to start",
         "description": "ICD10 CM 2022",
-        "cost": 550.0
+        "cost": 550
       },
       {
         "due": "",
         "description": "Current Procedural Terminology (CPT)",
-        "cost": 550.0
+        "cost": 550
       }
     ],
     "total": 1200
@@ -84,7 +106,7 @@
       {
         "due": "Due at time of Class",
         "description": "CPC Review - 3 hours",
-        "cost": 400.0
+        "cost": 400
       }
     ],
     "total": 400

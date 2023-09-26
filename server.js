@@ -1,43 +1,89 @@
 require("dotenv").config();
-const http = require("http");
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 const app = express();
+const retry = require("async-retry");
+const { createError, send } = require("micro");
+
+const { ApiError, client: square } = require("./server/square");
+const logger = require("./server/logger");
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
-app.post("/payment", async () => {
-  try {
-    console.log(req.body);
 
-    //   const response = await client.paymentsApi.createPayment({
-    //     sourceId: "cnon:card-nonce-ok",
-    //     idempotencyKey: "323c2111-159f-4c2e-bb5d-18d8d965c9c2",
-    //     amountMoney: {
-    //       amount: req.body.amountMoney.amount,
-    //       currency: "USD"
-    //     },
-    //     autocomplete: true,
-    //     acceptPartialAuthorization: false,
-    //     buyerEmailAddress: "midgitsuu@gmail.com",
-    //     billingAddress: {
-    //       addressLine1: "365 Forestway Circle",
-    //       addressLine2: "Unit 203",
-    //       locality: "Altamonte Springs",
-    //       postalCode: "32701",
-    //       country: "US",
-    //       firstName: "Brett",
-    //       lastName: "Connolly"
-    //     }
-    //   });
+const { validatePaymentPayload } = require("./server/schema");
 
-    //   console.log(response.result);
-    // } catch (error) {
-    //   console.log(error);
-  } catch (err) {
-    console.log(err);
+app.post("/payment", async (req, res) => {
+  //https://developer.squareup.com/docs/web-payments/take-card-payment
+  let payload = {
+    idempotencyKey: req.body.idempotencyKey,
+    locationId: req.body.locationId,
+    sourceId: req.body.sourceId,
+    verificationToken: req.body.verificationToken,
+    amount: req.body.amount
+  };
+
+  if (!validatePaymentPayload(payload)) {
+    throw createError(400, "Bad Request");
   }
+
+  await retry(async (bail, attempt) => {
+    try {
+      logger.debug("Creating payment", { attempt });
+
+      let payment = {
+        idempotencyKey: payload.idempotencyKey,
+        locationId: payload.locationId,
+        sourceId: payload.sourceId,
+        amountMoney: {
+          amount: payload.amount,
+          currency: "USD"
+        },
+        buyerEmailAddress: req.body.email,
+        billingAddress: {
+          addressLine1: req.body.addressLine1,
+          addressLine2: req.body.addressLine2,
+          locality: req.body.locality,
+          administrativeDistrictLevel1: req.body.administrativeDistrictLevel1,
+          postalCode: req.body.postalCode,
+          country: "US",
+          firstName: req.body.firstname,
+          lastName: req.body.lastname
+        }
+      };
+
+      if (payload.customerId) {
+        payment.customerId = payload.customerId;
+      }
+
+      if (payload.verificationToken) {
+        payment.verificationToken = payload.verificationToken;
+      }
+
+      // console.log(payment);
+
+      const { result, statusCode } = await square.paymentsApi.createPayment(payment);
+
+      logger.info("Payment succeeded!", { result, statusCode });
+
+      res.json({
+        result,
+        ok: true
+      });
+    } catch (ex) {
+      if (ex instanceof ApiError) {
+        // likely an error in the request. don't retry
+        console.error(ex.errors);
+        bail(ex);
+      } else {
+        // IDEA: send to error reporting service
+        console.error(`Error creating payment on attempt ${attempt}: ${ex}`);
+        throw ex; // to attempt retry
+      }
+    }
+  });
 });
 app.post("/message", (req, res) => {
   const nodemailer = require("nodemailer");
@@ -67,9 +113,9 @@ app.post("/message", (req, res) => {
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.log(error);
+      logger.debug(error);
     } else {
-      console.log("Email sent: " + info.response);
+      logger.debug("Email sent: " + info.response);
       res.send("Thank you for contacting me. I will respond as soon as possible!");
     }
   });
@@ -77,10 +123,15 @@ app.post("/message", (req, res) => {
 app.use("/signup", (_req, res) => {
   res.sendFile(path.join(__dirname + "/public/signup.html"));
 });
-// default URL for website
+//homepage
 app.use("/", (_req, res) => {
   res.sendFile(path.join(__dirname + "/public/index.html"));
 });
 const port = 3000;
 app.listen(port);
 console.debug("Server listening on port " + port);
+
+//prevents type error for number being Big Int
+BigInt.prototype.toJSON = function () {
+  return this.toString();
+};

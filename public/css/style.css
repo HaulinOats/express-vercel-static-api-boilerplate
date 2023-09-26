@@ -11158,7 +11158,7 @@ blockquote cite:before {
 /*# sourceMappingURL=style.css.map */
 /* custom CSS */
 #packageDetails {
-    box-shadow:1px 1px 3px;
+    box-shadow:inset 1px 1px 4px;
     display: none;
     background: white;
     border-radius: 7px;
@@ -11171,4 +11171,8 @@ blockquote cite:before {
 }
 #payment-form {
   /* display:none; */
+}
+.send-payment:disabled,
+.send-payment:disabled > i{
+  background:grey;
 }

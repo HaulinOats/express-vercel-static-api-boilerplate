@@ -1,11 +1,12 @@
-(async function ($) {
+(async ($) => {
   "use strict";
   //load packages into select
-  var form = ".ajax-payment";
-  var invalidCls = "is-invalid";
-  var $email = '[name="email"]';
-  var $validation = '[name="name"],[name="email"],[name="message"]'; // Must be use (,) without any space
-  var formMessages = $(".form-messages");
+  let form = ".ajax-payment";
+  let invalidCls = "is-invalid";
+  let $email = '[name="email"]';
+  let $validation = '[name="name"],[name="email"],[name="message"]'; // Must be use (,) without any space
+  let formMessages = $(".form-messages");
+  let selectedPackage;
 
   //get package info from JSON file and populate dropdown for selecting packages on signup.html page
   let packages = await fetch("./packages.json")
@@ -21,7 +22,7 @@
   //when selecting a package from dropdown, display table breakdown
   $("#packageSelect").on("change", (e) => {
     let packageIndex = parseInt(e.currentTarget.value);
-    let currentPackage = packages[packageIndex];
+    selectedPackage = packages[packageIndex];
     let tableEl = document.createElement("table");
     tableEl.classList.add(["table", "table-responsive-lg"]);
     tableEl.append(`<tr>
@@ -30,7 +31,7 @@
       <th>Cost</th>
     </tr>`);
     let rowHTML = "";
-    currentPackage.rowItems.forEach((row) => {
+    selectedPackage.rowItems.forEach((row) => {
       rowHTML += `<tr>
         <td>${row.due}</td>
         <td>${row.description}</td>
@@ -40,60 +41,22 @@
     rowHTML += `<tr>
       <td></td>
       <td class="fw-bold">Total</td>
-      <td class="fw-bold">$${currentPackage.total.toFixed(2)}</td>
+      <td class="fw-bold">$${selectedPackage.total.toFixed(2)}</td>
     </tr>`;
     tableEl.innerHTML = rowHTML;
     $("#packageDetails").html("").append(tableEl).show();
-    $("#payment-total").html(`Total: $${currentPackage.total.toFixed(2)}`);
+    $("#payment-total").html(`Total: $${selectedPackage.total.toFixed(2)}`);
     $("#payment-form").show();
   });
 
-  function sendPayment() {
-    var formData = $(form).serialize();
-    var valid;
-    valid = validateContact();
-    if (valid) {
-      console.log({
-        url: $(form).attr("action"),
-        data: formData,
-        type: "POST"
-      });
-      jQuery
-        .ajax({
-          url: $(form).attr("action"),
-          data: formData,
-          type: "POST"
-        })
-        .done(function (response) {
-          // Make sure that the formMessages div has the 'success' class.
-          formMessages.removeClass("error");
-          formMessages.addClass("success");
-          // Set the message text.
-          formMessages.text(response);
-          // Clear the form.
-          $(form + ' input:not([type="submit"]),' + form + " textarea").val("");
-        })
-        .fail(function (data) {
-          // Make sure that the formMessages div has the 'error' class.
-          formMessages.removeClass("success");
-          formMessages.addClass("error");
-          // Set the message text.
-          if (data.responseText !== "") {
-            formMessages.html(data.responseText);
-          } else {
-            formMessages.html("Oops! An error occured and your message could not be sent.");
-          }
-        });
-    }
-  }
-
+  //validates form data
   function validateContact() {
-    var valid = true;
-    var formInput;
+    let valid = true;
+    let formInput;
 
     function unvalid($validation) {
       $validation = $validation.split(",");
-      for (var i = 0; i < $validation.length; i++) {
+      for (let i = 0; i < $validation.length; i++) {
         formInput = form + " " + $validation[i];
         if (!$(formInput).val()) {
           $(formInput).addClass(invalidCls);
@@ -122,14 +85,38 @@
     return valid;
   }
 
-  $(form).on("submit", function (element) {
-    element.preventDefault();
-    sendPayment();
+  //Square Payments
+  let payments;
+  let card;
+  $(form).on("submit", (event, element) => {
+    event.preventDefault();
+    // if (validateContact()) {
+    handlePaymentMethodSubmission(event);
+    // }
   });
 
-  //Square Payments
   const appId = "sandbox-sq0idb-g25xE6Dc5GhJCNI2e4Rlpw";
   const locationId = "LB41ZFX0DKFE9";
+
+  if (!window.Square) {
+    throw new Error("Square.js failed to load properly");
+  }
+
+  try {
+    payments = window.Square.payments(appId, locationId);
+  } catch {
+    const statusContainer = document.getElementById("payment-status-container");
+    statusContainer.className = "missing-credentials";
+    statusContainer.style.visibility = "visible";
+    return;
+  }
+
+  try {
+    card = await initializeCard(payments);
+  } catch (e) {
+    console.error("Initializing Card failed", e);
+    return;
+  }
 
   async function initializeCard(payments) {
     const card = await payments.card();
@@ -138,13 +125,28 @@
     return card;
   }
 
-  async function createPayment(token, verificationToken) {
+  async function createPayment(token) {
+    if (!selectedPackage) return;
+
+    let formData = new FormData($(form)[0]);
+    console.log(formData);
     const body = JSON.stringify({
       locationId,
       sourceId: token,
-      verificationToken,
-      idempotencyKey: window.crypto.randomUUID()
+      idempotencyKey: window.crypto.randomUUID(),
+      firstname: formData.get("firstname"),
+      lastname: formData.get("lastname"),
+      email: formData.get("email"),
+      addressLine1: formData.get("addressLine1"),
+      addressLine2: formData.get("addressLine2"),
+      locality: formData.get("city"),
+      administrativeDistrictLevel1: formData.get("state"),
+      postalCode: formData.get("postalCode"),
+      message: formData.get("message"),
+      // amount: selectedPackage.total * 100
+      amount: 100
     });
+    console.log({ body });
 
     const paymentResponse = await fetch("/payment", {
       method: "POST",
@@ -176,6 +178,28 @@
     }
   }
 
+  async function verifyBuyer(token) {
+    let formData = new FormData($(form)[0]);
+    const verificationDetails = {
+      amount: 100,
+      billingContact: {
+        addressLines: [formData.get("addressLine1"), formData.get("addressLine2")],
+        familyName: formData.get("lastname"),
+        givenName: formData.get("firstname"),
+        email: formData.get("email"),
+        country: "US",
+        phone: formData.get("phone"),
+        region: formData.get("city"),
+        city: formData.get("locality")
+      },
+      currencyCode: "USD",
+      intent: "CHARGE"
+    };
+
+    const verificationResults = await payments.verifyBuyer(token, verificationDetails);
+    return verificationResults.token;
+  }
+
   // status is either SUCCESS or FAILURE;
   function displayPaymentResults(status) {
     const statusContainer = document.getElementById("payment-status-container");
@@ -190,51 +214,23 @@
     statusContainer.style.visibility = "visible";
   }
 
-  document.addEventListener("DOMContentLoaded", async function () {
-    if (!window.Square) {
-      throw new Error("Square.js failed to load properly");
-    }
+  async function handlePaymentMethodSubmission(event) {
+    event.preventDefault();
 
-    let payments;
     try {
-      payments = window.Square.payments(appId, locationId);
-    } catch {
-      const statusContainer = document.getElementById("payment-status-container");
-      statusContainer.className = "missing-credentials";
-      statusContainer.style.visibility = "visible";
-      return;
-    }
+      // disable the submit button as we await tokenization and make a payment request.
+      const token = await tokenize(card);
+      console.log({ token });
+      const verificationToken = await verifyBuyer(token);
+      console.log({ verificationToken });
+      const paymentResults = await createPayment(token, verificationToken);
+      console.log({ paymentResults });
+      displayPaymentResults("SUCCESS");
 
-    let card;
-    try {
-      card = await initializeCard(payments);
+      console.debug("Payment Success", paymentResults);
     } catch (e) {
-      console.error("Initializing Card failed", e);
-      return;
+      displayPaymentResults("FAILURE");
+      console.error(e.message);
     }
-
-    async function handlePaymentMethodSubmission(event, card) {
-      event.preventDefault();
-
-      try {
-        // disable the submit button as we await tokenization and make a payment request.
-        cardButton.disabled = true;
-        const token = await tokenize(card);
-        const paymentResults = await createPayment(token);
-        displayPaymentResults("SUCCESS");
-
-        console.debug("Payment Success", paymentResults);
-      } catch (e) {
-        cardButton.disabled = false;
-        displayPaymentResults("FAILURE");
-        console.error(e.message);
-      }
-    }
-
-    const cardButton = document.getElementById("card-button");
-    cardButton.addEventListener("click", async function (event) {
-      console.log("btn clicked");
-      await handlePaymentMethodSubmission(event, card);
-    });
-  });
+  }
 })(jQuery);
