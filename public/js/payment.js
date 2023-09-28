@@ -92,7 +92,7 @@ async function verifyBuyer(payments, token, packages) {
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
-  const packages = await fetch("./package-options.json")
+  const packages = await fetch("./content.json")
     .then((data) => data.json())
     .catch((err) => console.log(`error getting package data: ${err}`));
 

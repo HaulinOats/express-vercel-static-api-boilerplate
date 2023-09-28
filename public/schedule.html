@@ -47,6 +47,7 @@
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/custom.css">
 
+
     <script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
 
 </head>
@@ -98,16 +99,16 @@
                         <a href="index.html">Home</a>
                     </li>
                     <li>
-                        <a href="index.html#courses">Courses</a>
+                        <a href="#courses">Courses</a>
                     </li>
                     <li>
-                        <a href="index.html#testimonials">Testimonials</a>
+                        <a href="#testimonials">Testimonials</a>
                     </li>
                     <li>
                         <a href="schedule.html">Schedule</a>
                     </li>
                     <li>
-                        <a href="index.html#contact">Contact</a>
+                        <a href="#contact">Contact Me</a>
                     </li>
                     <li>
                         <a href="#">Signup</a>
@@ -184,16 +185,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <!--==============================
-    Popup Search Box
-    ============================== -->
-    <div class="popup-search-box d-none d-lg-block  ">
-        <button class="searchClose border-theme text-theme"><i class="fal fa-times"></i></button>
-        <form action="#">
-            <input type="text" class="border-theme" placeholder="What are you looking for">
-            <button type="submit"><i class="fal fa-search"></i></button>
-        </form>
     </div>
     <!--==============================
         Header Area
@@ -273,7 +264,8 @@
                             </div>
                             <div class="col-auto d-none d-xl-block">
                                 <div class="header2-btn">
-                                    <a href="#" class="vs-btn style2">Signup<i class="fal fa-calendar-alt"></i></a>
+                                    <a href="signup.html" class="vs-btn style2">Signup<i
+                                            class="fal fa-calendar-alt"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -289,12 +281,12 @@
         <div class="parallax" data-parallax-image="./img/breadcurmb/breadcurmb-1-1.jpg"></div>
         <div class="container z-index-common">
             <div class="breadcumb-content">
-                <h1 class="breadcumb-title">Signup</h1>
+                <h1 class="breadcumb-title">Schedule</h1>
                 <div class="breadcumb-menu-wrap">
                     <i class="far fa-home-lg"></i>
                     <ul class="breadcumb-menu">
                         <li><a href="index.html">Home</a></li>
-                        <li class="active">Signup</li>
+                        <li class="active">Schedule</li>
                     </ul>
                 </div>
             </div>
@@ -303,21 +295,33 @@
     <!--==============================
     Signup Form Area 
     ==============================-->
-    <section id="schedule">
+    <section id="schedule" class="mb-40">
         <div class="container">
             <!-- schedule will be inserted here -->
             <div data-component="schedule"></div>
+            <div class="row">
+                <h2>Calendar</h2>
+                <iframe
+                    src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=America%2FNew_York&showTitle=0&showNav=1&showPrint=0&showTabs=0&showCalendars=0&src=ODA1NzMyZTIwMzQ5ZTRjOWJiZmI2MGRkZGQyZTA1N2EyZjBkZTFmM2E3YWY1OWI2YmZhZGEyYTgwYWM0ZGRlYUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23AD1457"
+                    style="border:solid 1px #777" width="1080" height="600" frameborder="0" scrolling="no"></iframe>
+            </div>
         </div>
     </section>
-    <section class="appointment-wrapper">
+    <!-- <section class="appointment-wrapper space">
         <div class="container">
             <div class="row gx-40">
+                <div class="col-xl-12 mb-40 mb-xl-0 wow fadeInUp" data-wow-delay="0.3s">
+                    <h2>Classes Calendar</h2>
+                    <iframe
+                        src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=America%2FNew_York&showTitle=0&showNav=1&showPrint=0&showTabs=0&showCalendars=0&src=ODA1NzMyZTIwMzQ5ZTRjOWJiZmI2MGRkZGQyZTA1N2EyZjBkZTFmM2E3YWY1OWI2YmZhZGEyYTgwYWM0ZGRlYUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23AD1457"
+                        style="border:solid 1px #777" width="1080" height="600" frameborder="0" scrolling="no"></iframe>
+                </div>
                 <div class="col-lg-12 wow fadeInUp animated animated" data-wow-delay="0.3s"
                     style="visibility: visible; animation-delay: 0.3s; animation-name: g;">
                     <form class="ajax-payment form-wrap3 mb-30" data-bg-color="#f3f6f7"
                         style="background-color: rgb(243, 246, 247);">
                         <div class="form-title">
-                            <h3 class="mt-n2 fls-n2 mb-10">Payment</h3>
+                            <h3 class="mt-n2 fls-n2 mb-10">Course Information and Payment</h3>
                         </div>
                         <div class="col-md-12 form-group">
                             <p class="text-theme mb-4">Select a package and verify it is the correct one below before
@@ -466,7 +470,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!--==============================
 			Footer Area
 	==============================-->

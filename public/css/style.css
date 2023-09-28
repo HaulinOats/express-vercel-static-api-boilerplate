@@ -11156,26 +11156,3 @@ blockquote cite:before {
   }
 }
 /*# sourceMappingURL=style.css.map */
-/* custom CSS */
-#packageDetails {
-    box-shadow:inset 1px 1px 4px;
-    display: none;
-    background: white;
-    border-radius: 7px;
-}
-#packageDetails p {
-  margin-bottom:5px;
-}
-#packageDetails p:last-child {
-  margin-bottom:0;
-}
-#payment-form {
-  /* display:none; */
-}
-.send-payment:disabled,
-.send-payment:disabled > i{
-  background:grey;
-}
-.service-box {
-  padding: 40px 26px 42px 26px;
-}

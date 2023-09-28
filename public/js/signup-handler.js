@@ -10,13 +10,17 @@
   let selectedPackage;
 
   //get package info from JSON file and populate dropdown for selecting packages on signup.html page
-  let packages = await fetch("./package-options.json")
+  let packages = await fetch("./content.json")
     .then((data) => data.json())
+    .then((json) => json.packages)
     .catch((err) => console.log(`error getting package data: ${err}`));
 
   let packageSelectHTML = "";
   packages.forEach((pkg, i) => {
-    packageSelectHTML += `<option value="${i}">${pkg.name} - $${pkg.total.toFixed(2)}</option>`;
+    //don't add packages that have 'total' field set to 0
+    if (pkg.total > 0) {
+      packageSelectHTML += `<option value="${i}">${pkg.name} - $${pkg.total.toFixed(2)}</option>`;
+    }
   });
   packageSelect.append(packageSelectHTML);
 

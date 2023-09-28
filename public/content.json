@@ -1,0 +1,408 @@
+{
+  "classes": [
+    {
+      "name": "Class 1",
+      "startDate": "2/3/24",
+      "endDate": "5/4/24",
+      "courses": [
+        {
+          "courseId": 1,
+          "startDate": "2/3/24",
+          "endDate": "2/24/24"
+        },
+        {
+          "courseId": 2,
+          "startDate": "3/1/24",
+          "endDate": "3/30/24"
+        },
+        {
+          "courseId": 3,
+          "startDate": "2/3/24",
+          "endDate": "2/24/24"
+        }
+      ]
+    },
+    {
+      "name": "Class 2",
+      "startDate": "5/18/24",
+      "endDate": "8/31/24",
+      "courses": [
+        {
+          "courseId": 1,
+          "startDate": "5/18/24",
+          "endDate": "6/8/24"
+        },
+        {
+          "courseId": 2,
+          "startDate": "6/15/24",
+          "endDate": "7/27/24"
+        },
+        {
+          "courseId": 3,
+          "startDate": "8/3/24",
+          "endDate": "8/31/24"
+        }
+      ]
+    },
+    {
+      "name": "Class 3",
+      "startDate": "9/7/23",
+      "endDate": "12/7/24",
+      "courses": [
+        {
+          "courseId": 1,
+          "startDate": "9/7/24",
+          "endDate": "9/28/24"
+        },
+        {
+          "courseId": 2,
+          "startDate": "10/5/24",
+          "endDate": "11/2/24"
+        },
+        {
+          "courseId": 3,
+          "startDate": "11/9/24",
+          "endDate": "12/7/24"
+        }
+      ]
+    },
+    {
+      "name": "",
+      "startDate": "",
+      "endDate": "",
+      "courses": [
+        {
+          "courseId": 1,
+          "startDate": "",
+          "endDate": ""
+        },
+        {
+          "courseId": 2,
+          "startDate": "",
+          "endDate": ""
+        },
+        {
+          "courseId": 3,
+          "startDate": "",
+          "endDate": ""
+        }
+      ]
+    },
+    {
+      "name": "",
+      "startDate": "",
+      "endDate": "",
+      "courses": [
+        {
+          "courseId": 1,
+          "startDate": "",
+          "endDate": ""
+        },
+        {
+          "courseId": 2,
+          "startDate": "",
+          "endDate": ""
+        },
+        {
+          "courseId": 3,
+          "startDate": "",
+          "endDate": ""
+        }
+      ]
+    },
+    {
+      "name": "",
+      "startDate": "",
+      "endDate": "",
+      "courses": [
+        {
+          "courseId": 1,
+          "startDate": "",
+          "endDate": ""
+        },
+        {
+          "courseId": 2,
+          "startDate": "",
+          "endDate": ""
+        },
+        {
+          "courseId": 3,
+          "startDate": "",
+          "endDate": ""
+        }
+      ]
+    }
+  ],
+  "courseInfo": {
+    "1": {
+      "courseName": "Medical Term/Anatomy",
+      "books": [
+        {
+          "name": "Medical Terminology and Anatomy -  The Language of Medicine 11th edition",
+          "bookLink": "https://www.amazon.com/Language-Medicine-Davi-Ellen-Chabner-MAT/dp/0323370810"
+        },
+        {
+          "name": "",
+          "link": ""
+        },
+        {
+          "name": "",
+          "link": ""
+        },
+        {
+          "name": "",
+          "link": ""
+        }
+      ]
+    },
+    "2": {
+      "courseName": "ICD 10DM",
+      "books": [
+        {
+          "name": "2024 ICD 10 CM",
+          "link": "https://www.aapc.com/medical-coding-books/icd-10-cm-book/"
+        },
+        {
+          "name": "",
+          "link": ""
+        },
+        {
+          "name": "",
+          "link": ""
+        },
+        {
+          "name": "",
+          "link": ""
+        }
+      ]
+    },
+    "3": {
+      "courseName": "CPT/HCPCS",
+      "books": [
+        {
+          "name": "2024 Professional Edition only - CPT (Current Procedural Terminology)",
+          "link": "https://www.aapc.com/medical-coding-books/icd-10-cm-book/"
+        },
+        {
+          "name": "2024 HCPCS",
+          "link": "https://www.aapc.com/medical-coding-books/hcpcs-book/"
+        },
+        {
+          "name": "",
+          "link": ""
+        },
+        {
+          "name": "",
+          "link": ""
+        }
+      ]
+    },
+    "4": {
+      "courseName": "",
+      "books": [
+        {
+          "name": "",
+          "link": ""
+        },
+        {
+          "name": "",
+          "link": ""
+        },
+        {
+          "name": "",
+          "link": ""
+        },
+        {
+          "name": "",
+          "link": ""
+        }
+      ]
+    },
+    "5": {
+      "courseName": "",
+      "books": [
+        {
+          "name": "",
+          "link": ""
+        },
+        {
+          "name": "",
+          "link": ""
+        },
+        {
+          "name": "",
+          "link": ""
+        },
+        {
+          "name": "",
+          "link": ""
+        }
+      ]
+    },
+    "6": {
+      "courseName": "",
+      "books": [
+        {
+          "name": "",
+          "link": ""
+        },
+        {
+          "name": "",
+          "link": ""
+        },
+        {
+          "name": "",
+          "link": ""
+        },
+        {
+          "name": "",
+          "link": ""
+        }
+      ]
+    }
+  },
+  "packages": [
+    {
+      "name": "TEST",
+      "isRegistration": true,
+      "rowItems": [
+        {
+          "due": "Due at this time",
+          "description": "Test description",
+          "cost": 500
+        },
+        {
+          "due": "Due at another time",
+          "description": "Test description",
+          "cost": 550
+        },
+        {
+          "due": "Due at latest time",
+          "description": "Test description",
+          "cost": 550
+        }
+      ],
+      "total": 1
+    },
+    {
+      "name": "Pay in Full",
+      "isRegistration": true,
+      "rowItems": [
+        {
+          "due": "Pay Class in full prior to start of class",
+          "description": "Medical Terminology &amp; Anatomy",
+          "cost": 500
+        },
+        {
+          "due": "",
+          "description": "ICD10 CM 2022",
+          "cost": 500
+        },
+        {
+          "due": "",
+          "description": "Current Procedural Terminology (CPT)",
+          "cost": 500
+        }
+      ],
+      "total": 1600
+    },
+    {
+      "name": "Pay as you Go",
+      "isRegistration": true,
+      "rowItems": [
+        {
+          "due": "Due on or before Start of MT Class",
+          "description": "Medical Terminology &amp; Anatomy",
+          "cost": 500
+        },
+        {
+          "due": "Due on or before start of ICD-10 Class",
+          "description": "ICD10 CM 2022",
+          "cost": 550
+        },
+        {
+          "due": "Due on or before start of CPT Class",
+          "description": "Current Procedural Terminology (CPT)",
+          "cost": 550
+        }
+      ],
+      "total": 1700
+    },
+    {
+      "name": "Pay as you Go (ICD10 and CPT Courses)",
+      "isRegistration": true,
+      "rowItems": [
+        {
+          "due": "Due on or before start of ICD-10 Class",
+          "description": "ICD10 CM 2022",
+          "cost": 600
+        },
+        {
+          "due": "Due on or before start of CPT Class",
+          "description": "Current Procedural Terminology (CPT)",
+          "cost": 600
+        }
+      ],
+      "total": 1300
+    },
+    {
+      "name": "Pay in Full (ICD 10 and CPT Course)",
+      "isRegistration": true,
+      "rowItems": [
+        {
+          "due": "PAID in Full prior to start",
+          "description": "ICD10 CM 2022",
+          "cost": 550
+        },
+        {
+          "due": "",
+          "description": "Current Procedural Terminology (CPT)",
+          "cost": 550
+        }
+      ],
+      "total": 1200
+    },
+    {
+      "name": "CPC Review - ICD10 and CPT",
+      "isRegistration": false,
+      "rowItems": [
+        {
+          "due": "Due at time of Class",
+          "description": "CPC Review - 3 hours",
+          "cost": 400
+        }
+      ],
+      "total": 400
+    },
+    {
+      "name": "",
+      "isRegistration": false,
+      "rowItems": [],
+      "total": 0
+    },
+    {
+      "name": "",
+      "isRegistration": false,
+      "rowItems": [],
+      "total": 0
+    },
+    {
+      "name": "",
+      "isRegistration": false,
+      "rowItems": [],
+      "total": 0
+    },
+    {
+      "name": "",
+      "isRegistration": false,
+      "rowItems": [],
+      "total": 0
+    },
+    {
+      "name": "",
+      "isRegistration": false,
+      "rowItems": [],
+      "total": 0
+    }
+  ]
+}
