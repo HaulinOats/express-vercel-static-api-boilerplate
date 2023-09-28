@@ -11176,3 +11176,6 @@ blockquote cite:before {
 .send-payment:disabled > i{
   background:grey;
 }
+.service-box {
+  padding: 40px 26px 42px 26px;
+}

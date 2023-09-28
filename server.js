@@ -85,6 +85,9 @@ app.post("/payment", async (req, res) => {
     }
   });
 });
+app.use("/admin", (req, res) => {
+  res.sendFile(path.join(__dirname + "/public/admin.html"));
+});
 app.post("/message", (req, res) => {
   const nodemailer = require("nodemailer");
 

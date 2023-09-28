@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding With Sandy - Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.3/jsoneditor.min.css"
+        integrity="sha512-brXxIa/fpMfluh8HUWyrNssKy/H0oRzA0HhmipgfVwbXPamMUTZn1jEsvoGGwJYCRpSx4idujdul4vFwWgPROA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.3/jsoneditor.min.js"
+        integrity="sha512-TINESV2NynbuCVWErXJOCrqZCZPwUjjcRdOWUqfEQl35n/oEYJETHnhl9B3D4q/yJqnzFFLJZNP+ANYyxj4lcQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        #jsoneditor {
+            margin-bottom: 50px;
+        }
+
+        #saveJSON {
+            background: forestgreen;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            padding: 5px 10px;
+            width: 100px;
+            box-shadow: 1px 1px 3px black;
+            cursor: pointer;
+        }
+
+        #saveJSON:active {
+            box-shadow: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="jsoneditor"></div>
+    <div>
+        <label>Pin: </label>
+        <input type="text" id="pin" />
+        <button id="saveJSON">Save</button>
+    </div>
+    <script>
+        // create the editor
+        (async () => {
+            const newJSON = {};
+            const container = document.getElementById("jsoneditor")
+            const options = {
+                onChangeJSON(json) {
+                    newJSON = { ...json };
+                }
+            }
+            const editor = new JSONEditor(container, options)
+
+            // set json
+            const initialJson = await fetch("./site-content.json").then(result => result.json());
+            editor.set(initialJson);
+            editor.expandAll();
+        })()
+    </script>
+</body>
+
+</html>
