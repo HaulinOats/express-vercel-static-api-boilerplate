@@ -1,22 +1,25 @@
-require("dotenv").config();
-const express = require("express");
-const path = require("path");
+const app = require("express")();
+
+// app.get("/api", (req, res) => {
+//   const path = `/api/item/${v4()}`;
+//   res.setHeader("Content-Type", "text/html");
+//   res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+//   res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
+// });
+
+// app.get("/api/item/:slug", (req, res) => {
+//   const { slug } = req.params;
+//   res.end(`Item: ${slug}`);
+// });
+
 const fs = require("fs");
-const bodyParser = require("body-parser");
-const app = express();
 const retry = require("async-retry");
 const { createError } = require("micro");
-
-const { ApiError, client: square } = require("./server/square");
+const { validatePaymentPayload } = require("../server/schema");
+const { ApiError, client: square } = require("../server/square");
 const logger = require("./server/logger");
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(express.static("public"));
-
-const { validatePaymentPayload } = require("./server/schema");
-
-app.post("/payment", async (req, res) => {
+app.post("/api/payment", async (req, res) => {
   //https://developer.squareup.com/docs/web-payments/take-card-payment
   let payload = {
     idempotencyKey: req.body.idempotencyKey,
@@ -86,7 +89,8 @@ app.post("/payment", async (req, res) => {
     }
   });
 });
-app.post("/admin", (req, res) => {
+
+app.post("/api/admin", (req, res) => {
   if (req.body.pin === process.env.content_pin) {
     try {
       fs.writeFileSync(`${__dirname}/public/content.json`, JSON.stringify(req.body.contentJSON));
@@ -98,7 +102,7 @@ app.post("/admin", (req, res) => {
     res.json({ error: "Wrong pin" });
   }
 });
-app.post("/message", (req, res) => {
+app.post("/api/message", (req, res) => {
   const nodemailer = require("nodemailer");
 
   const userName = req.body.name;
@@ -129,28 +133,11 @@ app.post("/message", (req, res) => {
       logger.debug(error);
     } else {
       logger.debug("Email sent: " + info.response);
+      res.setHeader("Content-Type", "text/html");
+      res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
       res.send("Thank you for contacting me. I will respond as soon as possible!");
     }
   });
 });
-app.use("/admin", (req, res) => {
-  res.sendFile(path.join(__dirname + "/public/admin.html"));
-});
-app.use("/signup", (_req, res) => {
-  res.sendFile(path.join(__dirname + "/public/signup.html"));
-});
-app.use("/schedule", (_req, res) => {
-  res.sendFile(path.join(__dirname + "/public/schedule.html"));
-});
-//homepage
-app.use("/", (_req, res) => {
-  res.sendFile(path.join(__dirname + "/public/index.html"));
-});
-const port = 3000;
-app.listen(port);
-console.debug("Server listening on port " + port);
 
-//prevents type error for number being Big Int
-BigInt.prototype.toJSON = function () {
-  return this.toString();
-};
+module.exports = app;

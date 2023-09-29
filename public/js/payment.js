@@ -33,7 +33,7 @@ async function createPayment(token, verificationToken, packages) {
     amount
   });
 
-  const paymentResponse = await fetch("/payment", {
+  const paymentResponse = await fetch("/api/payment", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
