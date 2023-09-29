@@ -1,7 +1,8 @@
 //handles building of schedule and course information on schedule and signup pages
 (async () => {
   "use strict";
-  const contentJSON = await fetch("./content.json")
+  console.log("https://json.extendsclass.com/bin/070e0707707e");
+  const contentJSON = await fetch("https://json.extendsclass.com/bin/070e0707707e")
     .then((data) => data.json())
     .catch((err) => console.log("error loading content: ", err));
   const classes = contentJSON.classes;

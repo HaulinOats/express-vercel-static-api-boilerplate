@@ -16,4 +16,4 @@ Square for receiving payments: https://squareup.com/us/en/payments
 - Switch Gmail over to Sandy's business Gmail account
 - Switch Square over to Sandy's account from developer account
 - Setup Github and Vercel accounts to transfer site
-- Go over how to update content with pin (located in `public/content.json`)
+- Go over how to update content with pin and create account on extendsclass (`https://extendsclass.com/jsonstorage/070e0707707e`)

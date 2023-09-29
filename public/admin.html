@@ -76,7 +76,7 @@
             const editor = new JSONEditor(container, options)
 
             // set json
-            const initialJson = await fetch("./content.json").then(result => result.json());
+            const initialJson = await fetch("https://json.extendsclass.com/bin/070e0707707e").then(result => result.json());
             let newJSON = { ...initialJson };
             editor.set(initialJson);
             editor.expandAll();
@@ -87,7 +87,7 @@
             const saveBtn = document.getElementById("saveJSON");
             saveBtn.addEventListener("click", async (e) => {
                 try {
-                    const result = await fetch("/admin", {
+                    const result = await fetch("/api/admin", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"

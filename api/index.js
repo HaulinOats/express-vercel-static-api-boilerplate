@@ -77,20 +77,25 @@ app.post("/api/payment", async (req, res) => {
   });
 });
 
-// updating/rewriting content.json file
-// app.post("/api/admin", (req, res) => {
-//   if (req.body.pin === process.env.content_pin) {
-//     try {
-//       console.log(`../public/content.json`);
-//       fs.writeFileSync(`../public/content.json`, JSON.stringify(req.body.contentJSON));
-//       res.json({ ok: true });
-//     } catch (err) {
-//       res.json({ error: "Error saving json. Contact administrator." });
-//     }
-//   } else {
-//     res.json({ error: "Wrong pin" });
-//   }
-// });
+app.post("/api/admin", async (req, res) => {
+  if (req.body.pin === process.env.content_pin) {
+    try {
+      const request = await fetch("https://json.extendsclass.com/bin/070e0707707e", {
+        method: "PUT",
+        headers: {
+          "Security-key": process.env.content_pin
+        },
+        body: JSON.stringify(req.body.contentJSON)
+      });
+      console.log(request);
+      res.json({ ok: true });
+    } catch (err) {
+      res.json({ error: "Error saving json. Contact administrator." });
+    }
+  } else {
+    res.json({ error: "Wrong pin" });
+  }
+});
 
 app.post("/api/message", (req, res) => {
   const nodemailer = require("nodemailer");
