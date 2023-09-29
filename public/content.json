@@ -29,109 +29,22 @@
         { "courseId": 2, "startDate": "10/5/24", "endDate": "11/2/24" },
         { "courseId": 3, "startDate": "11/9/24", "endDate": "12/7/24" }
       ]
-    },
-    {
-      "name": "",
-      "startDate": "",
-      "endDate": "",
-      "courses": [
-        { "courseId": 1, "startDate": "", "endDate": "" },
-        { "courseId": 2, "startDate": "", "endDate": "" },
-        { "courseId": 3, "startDate": "", "endDate": "" }
-      ]
-    },
-    {
-      "name": "",
-      "startDate": "",
-      "endDate": "",
-      "courses": [
-        { "courseId": 1, "startDate": "", "endDate": "" },
-        { "courseId": 2, "startDate": "", "endDate": "" },
-        { "courseId": 3, "startDate": "", "endDate": "" }
-      ]
-    },
-    {
-      "name": "",
-      "startDate": "",
-      "endDate": "",
-      "courses": [
-        { "courseId": 1, "startDate": "", "endDate": "" },
-        { "courseId": 2, "startDate": "", "endDate": "" },
-        { "courseId": 3, "startDate": "", "endDate": "" }
-      ]
     }
   ],
   "courseInfo": {
     "1": {
       "courseName": "Medical Term/Anatomy",
-      "books": [
-        { "name": "Medical Terminology and Anatomy -  The Language of Medicine 11th edition", "link": "https://www.amazon.com/Language-Medicine-Davi-Ellen-Chabner-MAT/dp/0323370810" },
-        { "name": "", "link": "" },
-        { "name": "", "link": "" },
-        { "name": "", "link": "" }
-      ]
+      "books": [{ "name": "Medical Terminology and Anatomy -  The Language of Medicine 11th edition", "link": "https://www.amazon.com/Language-Medicine-Davi-Ellen-Chabner-MAT/dp/0323370810" }]
     },
     "2": {
       "courseName": "ICD 10DM",
-      "books": [
-        { "name": "2024 ICD 10 CM", "link": "https://www.aapc.com/medical-coding-books/icd-10-cm-book/" },
-        { "name": "", "link": "" },
-        { "name": "", "link": "" },
-        { "name": "", "link": "" }
-      ]
+      "books": [{ "name": "2024 ICD 10 CM", "link": "https://www.aapc.com/medical-coding-books/icd-10-cm-book/" }]
     },
     "3": {
       "courseName": "CPT/HCPCS",
       "books": [
         { "name": "2024 Professional Edition only - CPT (Current Procedural Terminology)", "link": "https://www.aapc.com/medical-coding-books/icd-10-cm-book/" },
-        { "name": "2024 HCPCS", "link": "https://www.aapc.com/medical-coding-books/hcpcs-book/" },
-        { "name": "", "link": "" },
-        { "name": "", "link": "" }
-      ]
-    },
-    "4": {
-      "courseName": "",
-      "books": [
-        { "name": "", "link": "" },
-        { "name": "", "link": "" },
-        { "name": "", "link": "" },
-        { "name": "", "link": "" }
-      ]
-    },
-    "5": {
-      "courseName": "",
-      "books": [
-        { "name": "", "link": "" },
-        { "name": "", "link": "" },
-        { "name": "", "link": "" },
-        { "name": "", "link": "" }
-      ]
-    },
-    "6": {
-      "courseName": "",
-      "books": [
-        { "name": "", "link": "" },
-        { "name": "", "link": "" },
-        { "name": "", "link": "" },
-        { "name": "", "link": "" }
-      ]
-    },
-    "7": {
-      "courseName": "",
-      "books": [
-        { "name": "", "link": "" },
-        { "name": "", "link": "" },
-        { "name": "", "link": "" },
-        { "name": "", "link": "" }
-      ]
-    },
-    "8": {
-      "courseName": "",
-      "books": [
-        { "name": "", "link": "" },
-        { "name": "", "link": "" },
-        { "name": "", "link": "" },
-        { "name": "", "link": "" }
+        { "name": "2024 HCPCS", "link": "https://www.aapc.com/medical-coding-books/hcpcs-book/" }
       ]
     }
   },
@@ -179,16 +92,16 @@
       ],
       "total": 1200
     },
-    { "name": "CPC Review - ICD10 and CPT", "rows": [{ "due": "Due at time of Class", "description": "CPC Review - 3 hours", "cost": 400 }], "total": 400 },
-    { "name": "", "rows": [], "total": 0 },
-    { "name": "", "rows": [], "total": 0 },
-    { "name": "", "rows": [], "total": 0 },
-    { "name": "", "rows": [], "total": 0 },
-    { "name": "", "rows": [], "total": 0 },
-    { "name": "", "rows": [], "total": 0 },
-    { "name": "", "rows": [], "total": 0 },
-    { "name": "", "rows": [], "total": 0 },
-    { "name": "", "rows": [], "total": 0 },
-    { "name": "", "rows": [], "total": 0 }
+    {
+      "name": "CPC Review - ICD10 and CPT",
+      "rows": [
+        {
+          "due": "Due at time of Class",
+          "description": "CPC Review - 3 hours",
+          "cost": 400
+        }
+      ],
+      "total": 400
+    }
   ]
 }
