@@ -87,7 +87,7 @@
             const saveBtn = document.getElementById("saveJSON");
             saveBtn.addEventListener("click", async (e) => {
                 try {
-                    const result = await fetch("/api/admin", {
+                    const result = await fetch("/admin", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"

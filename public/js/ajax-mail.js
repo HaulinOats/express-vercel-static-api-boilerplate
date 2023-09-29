@@ -1,6 +1,20 @@
 (function ($) {
   "use strict";
 
+  // $("#testBtn").on("click", () => {
+  //   $.ajax({
+  //     url: "/api/test",
+  //     method: "POST",
+  //     data: JSON.stringify({ name: "Brett" })
+  //   })
+  //     .done((response) => {
+  //       console.log("success: ", response);
+  //     })
+  //     .fail((data) => {
+  //       console.log("fail: ", data);
+  //     });
+  // });
+
   var form = ".ajax-contact";
   var invalidCls = "is-invalid";
   var $email = '[name="email"]';

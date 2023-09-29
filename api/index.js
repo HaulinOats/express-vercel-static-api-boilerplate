@@ -1,23 +1,10 @@
 const app = require("express")();
-
-// app.get("/api", (req, res) => {
-//   const path = `/api/item/${v4()}`;
-//   res.setHeader("Content-Type", "text/html");
-//   res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
-//   res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
-// });
-
-// app.get("/api/item/:slug", (req, res) => {
-//   const { slug } = req.params;
-//   res.end(`Item: ${slug}`);
-// });
-
 const fs = require("fs");
 const retry = require("async-retry");
 const { createError } = require("micro");
 const { validatePaymentPayload } = require("../server/schema");
 const { ApiError, client: square } = require("../server/square");
-const logger = require("./server/logger");
+const logger = require("../server/logger");
 
 app.post("/api/payment", async (req, res) => {
   //https://developer.squareup.com/docs/web-payments/take-card-payment
@@ -90,18 +77,21 @@ app.post("/api/payment", async (req, res) => {
   });
 });
 
-app.post("/api/admin", (req, res) => {
-  if (req.body.pin === process.env.content_pin) {
-    try {
-      fs.writeFileSync(`${__dirname}/public/content.json`, JSON.stringify(req.body.contentJSON));
-      res.json({ ok: true });
-    } catch (err) {
-      res.json({ error: "Error saving json. Contact administrator." });
-    }
-  } else {
-    res.json({ error: "Wrong pin" });
-  }
-});
+// updating/rewriting content.json file
+// app.post("/api/admin", (req, res) => {
+//   if (req.body.pin === process.env.content_pin) {
+//     try {
+//       console.log(`../public/content.json`);
+//       fs.writeFileSync(`../public/content.json`, JSON.stringify(req.body.contentJSON));
+//       res.json({ ok: true });
+//     } catch (err) {
+//       res.json({ error: "Error saving json. Contact administrator." });
+//     }
+//   } else {
+//     res.json({ error: "Wrong pin" });
+//   }
+// });
+
 app.post("/api/message", (req, res) => {
   const nodemailer = require("nodemailer");
 
