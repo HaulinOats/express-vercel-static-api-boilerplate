@@ -11,6 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.3/jsoneditor.min.js"
         integrity="sha512-TINESV2NynbuCVWErXJOCrqZCZPwUjjcRdOWUqfEQl35n/oEYJETHnhl9B3D4q/yJqnzFFLJZNP+ANYyxj4lcQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="./css/custom.css" />
     <style>
         #jsoneditor {
             margin-bottom: 50px;
@@ -30,22 +31,44 @@
         #saveJSON:active {
             box-shadow: none;
         }
+
+        .msg {
+            font-size: 20px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 2s;
+        }
+
+        .success-msg {
+            color: green;
+        }
+
+        .error-msg {
+            color: red;
+        }
+
+        .msg.show {
+            opacity: 1;
+        }
     </style>
 </head>
 
 <body>
+    <h2>CodingWithSandy - Content Editor</h2>
     <div id="jsoneditor"></div>
-    <div>
+    <div class="admin-edit-form">
         <label>Pin: </label>
         <input type="text" id="pin" />
         <button id="saveJSON">Save</button>
+        <p class="msg success-msg">Save successful!</p>
+        <p class="msg error-msg"></p>
     </div>
     <script>
         // create the editor
         (async () => {
-            const newJSON = {};
             const container = document.getElementById("jsoneditor")
             const options = {
+                mode: "form",
                 onChangeJSON(json) {
                     newJSON = { ...json };
                 }
@@ -53,9 +76,43 @@
             const editor = new JSONEditor(container, options)
 
             // set json
-            const initialJson = await fetch("./site-content.json").then(result => result.json());
+            const initialJson = await fetch("./content.json").then(result => result.json());
+            let newJSON = { ...initialJson };
             editor.set(initialJson);
             editor.expandAll();
+
+            const pinInput = document.getElementById("pin");
+            const successEl = document.querySelector(".success-msg");
+            const errorEl = document.querySelector(".error-msg");
+            const saveBtn = document.getElementById("saveJSON");
+            saveBtn.addEventListener("click", async (e) => {
+                try {
+                    const result = await fetch("/admin", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            pin: pinInput.value,
+                            contentJSON: newJSON
+                        })
+                    });
+                    const returnJSON = await result.json();
+                    if (returnJSON?.ok) {
+                        errorEl.classList.remove("show");
+                        successEl.classList.add("show");
+                        setTimeout(() => {
+                            successEl.classList.remove("show");
+                        }, 5000);
+                    } else {
+                        errorEl.innerText = returnJSON.error;
+                        errorEl.classList.add("show");
+                    }
+                } catch (err) {
+                    console.log(err);
+                    errorEl.classList.add("show");
+                }
+            });
         })()
     </script>
 </body>

@@ -26,7 +26,17 @@
 }
 #schedule table thead {
   background:lightblue;
+  font-weight:bold;
 }
 #schedule table tbody {
   background-color:#edfbff;
+}
+/* JSON Editor (/admin route) */
+.jsoneditor-dragarea,
+.jsoneditor-contextmenu-button{
+  visibility: hidden;
+}
+.jsoneditor-menu,
+.jsoneditor-navigation-bar {
+  display:none;
 }

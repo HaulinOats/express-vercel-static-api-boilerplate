@@ -1,10 +1,11 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
+const fs = require("fs");
 const bodyParser = require("body-parser");
 const app = express();
 const retry = require("async-retry");
-const { createError, send } = require("micro");
+const { createError } = require("micro");
 
 const { ApiError, client: square } = require("./server/square");
 const logger = require("./server/logger");
@@ -85,8 +86,17 @@ app.post("/payment", async (req, res) => {
     }
   });
 });
-app.use("/admin", (req, res) => {
-  res.sendFile(path.join(__dirname + "/public/admin.html"));
+app.post("/admin", (req, res) => {
+  if (req.body.pin === process.env.content_pin) {
+    try {
+      fs.writeFileSync(`${__dirname}/public/content.json`, JSON.stringify(req.body.contentJSON));
+      res.json({ ok: true });
+    } catch (err) {
+      res.json({ error: "Error saving json. Contact administrator." });
+    }
+  } else {
+    res.json({ error: "Wrong pin" });
+  }
 });
 app.post("/message", (req, res) => {
   const nodemailer = require("nodemailer");
@@ -122,6 +132,9 @@ app.post("/message", (req, res) => {
       res.send("Thank you for contacting me. I will respond as soon as possible!");
     }
   });
+});
+app.use("/admin", (req, res) => {
+  res.sendFile(path.join(__dirname + "/public/admin.html"));
 });
 app.use("/signup", (_req, res) => {
   res.sendFile(path.join(__dirname + "/public/signup.html"));

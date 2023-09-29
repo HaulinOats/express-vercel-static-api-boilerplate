@@ -36,7 +36,7 @@
       <th>Cost</th>
     </tr>`);
     let rowHTML = "";
-    selectedPackage.rowItems.forEach((row) => {
+    selectedPackage.rows.forEach((row) => {
       rowHTML += `<tr>
         <td>${row.due}</td>
         <td>${row.description}</td>

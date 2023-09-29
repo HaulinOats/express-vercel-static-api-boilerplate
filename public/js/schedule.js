@@ -22,7 +22,7 @@
               <td>Course Name</td>
               <td>Start Date</td>
               <td>End Date</td>
-              <td>Book</td>
+              <td>Book(s)</td>
             </tr>
           </thead>
           <tbody>
