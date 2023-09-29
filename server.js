@@ -139,6 +139,9 @@ app.use("/admin", (req, res) => {
 app.use("/signup", (_req, res) => {
   res.sendFile(path.join(__dirname + "/public/signup.html"));
 });
+app.use("/schedule", (_req, res) => {
+  res.sendFile(path.join(__dirname + "/public/schedule.html"));
+});
 //homepage
 app.use("/", (_req, res) => {
   res.sendFile(path.join(__dirname + "/public/index.html"));
