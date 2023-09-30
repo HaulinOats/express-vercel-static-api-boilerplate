@@ -1,4 +1,5 @@
 {
+  "cleanUrls": true,
   "rewrites": [{ "source": "/api/(.*)", "destination": "/api" }],
   "headers": [
     {
@@ -7,19 +8,6 @@
         {
           "key": "Content-Type",
           "value": "application/json"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "s-max-age=1, stale-while-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "text/html"
         },
         {
           "key": "Cache-Control",
