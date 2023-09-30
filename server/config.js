@@ -7,7 +7,7 @@ const isProduction = process.env.NODE_ENV === "production";
 
 // load configuration based on environment
 const { error, parsed } = config({
-  path: ".env"
+  path: isProduction ? ".env.production" : ".env.sandbox"
 });
 
 if (error) {
@@ -20,6 +20,6 @@ logger.debug("Parsed configuration:", parsed);
 
 // export secrets stored in .env.production or .env.sandbox (based on .env.example)
 module.exports = {
-  ...parsed,
+  // ...parsed,
   isProduction
 };

@@ -47,8 +47,24 @@
             color: red;
         }
 
-        .msg.show {
+        .msg.show,
+        .loading-svg.show {
             opacity: 1;
+        }
+
+        .loading-svg {
+            position: relative;
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            opacity: 0;
+            transition: opacity 2s;
+        }
+
+        .loading-svg-img {
+            width: 100%;
+            position: absolute;
+            top: 14px;
         }
     </style>
 </head>
@@ -60,6 +76,9 @@
         <label>Pin: </label>
         <input type="text" id="pin" />
         <button id="saveJSON">Save</button>
+        <div class="loading-svg">
+            <img src="./img/loading.svg" class="loading-svg-img" />
+        </div>
         <p class="msg success-msg">Save successful!</p>
         <p class="msg error-msg"></p>
     </div>
@@ -84,8 +103,10 @@
             const pinInput = document.getElementById("pin");
             const successEl = document.querySelector(".success-msg");
             const errorEl = document.querySelector(".error-msg");
+            const loadingEl = document.querySelector('.loading-svg');
             const saveBtn = document.getElementById("saveJSON");
             saveBtn.addEventListener("click", async (e) => {
+                loadingEl.classList.add('show');
                 try {
                     const result = await fetch("/api/admin", {
                         method: "POST",
@@ -97,20 +118,22 @@
                             contentJSON: newJSON
                         })
                     });
-                    const returnJSON = await result.json();
-                    if (returnJSON?.ok) {
+                    const response = await result.json();
+                    if (response.success) {
                         errorEl.classList.remove("show");
                         successEl.classList.add("show");
                         setTimeout(() => {
                             successEl.classList.remove("show");
                         }, 5000);
-                    } else {
-                        errorEl.innerText = returnJSON.error;
+                    } else if (response.error) {
+                        errorEl.innerText = response.error;
                         errorEl.classList.add("show");
                     }
+                    loadingEl.classList.remove('show');
                 } catch (err) {
                     console.log(err);
                     errorEl.classList.add("show");
+                    loadingEl.classList.add('show');
                 }
             });
         })()

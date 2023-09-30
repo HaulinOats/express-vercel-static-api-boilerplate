@@ -10,7 +10,7 @@
   let selectedPackage;
 
   //get package info from JSON file and populate dropdown for selecting packages on signup.html page
-  let packages = await fetch("./content.json")
+  let packages = await fetch("https://json.extendsclass.com/bin/070e0707707e")
     .then((data) => data.json())
     .then((json) => json.packages)
     .catch((err) => console.log(`error getting package data: ${err}`));

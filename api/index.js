@@ -1,10 +1,13 @@
 const app = require("express")();
-const fs = require("fs");
 const retry = require("async-retry");
 const { createError } = require("micro");
 const { validatePaymentPayload } = require("../server/schema");
 const { ApiError, client: square } = require("../server/square");
 const logger = require("../server/logger");
+
+// app.get("/api/test", (req, res) => {
+//   res.json({ msg: "hello" });
+// });
 
 app.post("/api/payment", async (req, res) => {
   //https://developer.squareup.com/docs/web-payments/take-card-payment
@@ -73,6 +76,7 @@ app.post("/api/payment", async (req, res) => {
         console.error(`Error creating payment on attempt ${attempt}: ${ex}`);
         throw ex; // to attempt retry
       }
+      res.json({ error: "error with payment" });
     }
   });
 });
@@ -87,8 +91,7 @@ app.post("/api/admin", async (req, res) => {
         },
         body: JSON.stringify(req.body.contentJSON)
       });
-      console.log(request);
-      res.json({ ok: true });
+      res.json({ success: true });
     } catch (err) {
       res.json({ error: "Error saving json. Contact administrator." });
     }
@@ -98,6 +101,7 @@ app.post("/api/admin", async (req, res) => {
 });
 
 app.post("/api/message", (req, res) => {
+  console.log(req.body);
   const nodemailer = require("nodemailer");
 
   const userName = req.body.name;
@@ -118,21 +122,22 @@ app.post("/api/message", (req, res) => {
     subject: "CodingWithSandy - Inquiry",
     text: `
       From: ${userName}
-      
+
       ${userMessage}
     `
   };
 
-  transporter.sendMail(mailOptions, (error, info) => {
+  transporter.sendMail(mailOptions, (error) => {
     if (error) {
-      logger.debug(error);
+      res.json({ error: "There was an error sending your email. Contact site administrator." });
     } else {
-      logger.debug("Email sent: " + info.response);
-      res.setHeader("Content-Type", "text/html");
-      res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
-      res.send("Thank you for contacting me. I will respond as soon as possible!");
+      res.json({ success: "Thank you for contacting me. I will respond as soon as possible!" });
     }
   });
 });
+
+BigInt.prototype.toJSON = function () {
+  return this.toString();
+};
 
 module.exports = app;

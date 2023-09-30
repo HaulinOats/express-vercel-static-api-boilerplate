@@ -4,8 +4,13 @@
 
 Site structure, styles, and base interactivity built using Medixi site template zip file purchased on ThemeForest. Base, pre-modified template zip file `medixi-html-template.zip` located in project root.
 
-JSON Editor for editing `public/content.json` at `/admin` route. This file allows Sandy to modify site content without need for developer:
+JSON Editor for editing site content at `/admin.html` route. This allows Sandy to modify site content without need for developer.
+
+JSON Editor:
 https://github.com/josdejong/jsoneditor/blob/master/docs/api.md
+
+Live JSON hosting service:
+https://extendsclass.com/jsonstorage/070e0707707e
 
 Square for receiving payments: https://squareup.com/us/en/payments
 

@@ -90,9 +90,10 @@ async function verifyBuyer(payments, token, packages) {
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
-  const packages = await fetch("./content.json")
+  const response = await fetch("https://json.extendsclass.com/bin/070e0707707e")
     .then((data) => data.json())
     .catch((err) => console.log(`error getting package data: ${err}`));
+  const packages = response.packages;
 
   if (!window.Square) {
     throw new Error("Square.js failed to load properly");

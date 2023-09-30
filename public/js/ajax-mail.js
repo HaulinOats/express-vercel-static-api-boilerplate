@@ -1,19 +1,22 @@
 (function ($) {
   "use strict";
 
-  // $("#testBtn").on("click", () => {
-  //   $.ajax({
-  //     url: "/api/test",
-  //     method: "POST",
-  //     data: JSON.stringify({ name: "Brett" })
-  //   })
-  //     .done((response) => {
-  //       console.log("success: ", response);
-  //     })
-  //     .fail((data) => {
-  //       console.log("fail: ", data);
-  //     });
-  // });
+  $("#testBtn").on("click", () => {
+    $.ajax({
+      url: "/api/test",
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      data: JSON.stringify({ name: "Brett" })
+    })
+      .done((response) => {
+        console.log("success: ", response);
+      })
+      .fail((data) => {
+        console.log("fail: ", data);
+      });
+  });
 
   var form = ".ajax-contact";
   var invalidCls = "is-invalid";
@@ -39,12 +42,18 @@
         })
         .done(function (response) {
           // Make sure that the formMessages div has the 'success' class.
-          formMessages.removeClass("error");
-          formMessages.addClass("success");
-          // Set the message text.
-          formMessages.text(response);
-          // Clear the form.
-          $(form + ' input:not([type="submit"]),' + form + " textarea").val("");
+          if (response.success) {
+            formMessages.removeClass("error");
+            formMessages.addClass("success");
+            formMessages.text(response.msg);
+            // Clear the form.
+            $(form + ' input:not([type="submit"]),' + form + " textarea").val("");
+          } else if (response.error) {
+            // Make sure that the formMessages div has the 'error' class.
+            formMessages.removeClass("success");
+            formMessages.addClass("error");
+            formMessages.html(response.error);
+          }
         })
         .fail(function (data) {
           // Make sure that the formMessages div has the 'error' class.
@@ -54,7 +63,7 @@
           if (data.responseText !== "") {
             formMessages.html(data.responseText);
           } else {
-            formMessages.html("Oops! An error occured and your message could not be sent.");
+            formMessages.html("Oops! An error occurred and your message could not be sent.");
           }
         });
     }
