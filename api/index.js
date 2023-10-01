@@ -4,10 +4,14 @@ const retry = require("async-retry");
 app.post("/api/test", (req, res) => {
   res.setHeader("Content-Type", "application/json");
   res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+  const { name } = req.body;
   res.json({ msg: "hello" });
 });
 
 app.post("/api/message", (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+
   const nodemailer = require("nodemailer");
 
   const { name, email, message } = req.body;
