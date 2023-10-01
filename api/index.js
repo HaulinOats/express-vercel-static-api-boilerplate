@@ -1,7 +1,7 @@
 const app = require("express")();
 const retry = require("async-retry");
 
-app.get("/api/test", (req, res) => {
+app.post("/api/test", (req, res) => {
   res.setHeader("Content-Type", "text/html");
   res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
   res.json({ msg: "hello" });

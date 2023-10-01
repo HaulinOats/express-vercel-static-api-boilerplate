@@ -4,7 +4,7 @@
   $("#testBtn").on("click", () => {
     try {
       fetch("/api/test", {
-        method: "GET",
+        method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
