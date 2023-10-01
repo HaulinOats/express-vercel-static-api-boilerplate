@@ -2,10 +2,14 @@ const app = require("express")();
 const retry = require("async-retry");
 
 app.get("/api/test", (req, res) => {
+  res.setHeader("Content-Type", "text/html");
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
   res.json({ msg: "hello" });
 });
 
 app.post("/api/payment", async (req, res) => {
+  res.setHeader("Content-Type", "text/html");
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
   const { createError } = require("micro");
   const { validatePaymentPayload } = require("../server/schema");
   const { ApiError, client: square } = require("../server/square");
@@ -82,6 +86,8 @@ app.post("/api/payment", async (req, res) => {
 });
 
 app.post("/api/admin", async (req, res) => {
+  res.setHeader("Content-Type", "text/html");
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
   if (req.body.pin === process.env.content_pin) {
     try {
       const request = await fetch("https://json.extendsclass.com/bin/070e0707707e", {
@@ -101,7 +107,8 @@ app.post("/api/admin", async (req, res) => {
 });
 
 app.post("/api/message", (req, res) => {
-  console.log(req.body);
+  res.setHeader("Content-Type", "text/html");
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
   const nodemailer = require("nodemailer");
 
   const userName = req.body.name;
