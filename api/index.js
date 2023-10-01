@@ -2,13 +2,50 @@ const app = require("express")();
 const retry = require("async-retry");
 
 app.post("/api/test", (req, res) => {
-  res.setHeader("Content-Type", "text/html");
+  res.setHeader("Content-Type", "application/json");
   res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
   res.json({ msg: "hello" });
 });
 
+app.post("/api/message", (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+  const nodemailer = require("nodemailer");
+
+  const userName = req.body.name;
+  const userEmail = req.body.email;
+  const userMessage = req.body.message;
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.email_name,
+      pass: process.env.email_password
+    }
+  });
+
+  const mailOptions = {
+    from: userEmail,
+    to: process.env.email_name,
+    subject: "CodingWithSandy - Inquiry",
+    text: `
+      From: ${userName}
+
+      ${userMessage}
+    `
+  };
+
+  transporter.sendMail(mailOptions, (error) => {
+    if (error) {
+      res.json({ error: "There was an error sending your email. Contact site administrator." });
+    } else {
+      res.json({ success: "Thank you for contacting me. I will respond as soon as possible!" });
+    }
+  });
+});
+
 app.post("/api/payment", async (req, res) => {
-  res.setHeader("Content-Type", "text/html");
+  res.setHeader("Content-Type", "application/json");
   res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
   const { createError } = require("micro");
   const { validatePaymentPayload } = require("../server/schema");
@@ -86,7 +123,7 @@ app.post("/api/payment", async (req, res) => {
 });
 
 app.post("/api/admin", async (req, res) => {
-  res.setHeader("Content-Type", "text/html");
+  res.setHeader("Content-Type", "application/json");
   res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
   if (req.body.pin === process.env.content_pin) {
     try {
@@ -104,44 +141,6 @@ app.post("/api/admin", async (req, res) => {
   } else {
     res.json({ error: "Wrong pin" });
   }
-});
-
-app.post("/api/message", (req, res) => {
-  res.setHeader("Content-Type", "text/html");
-  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
-  const nodemailer = require("nodemailer");
-
-  const userName = req.body.name;
-  const userEmail = req.body.email;
-  const userMessage = req.body.message;
-
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.email_name,
-      pass: process.env.email_password
-    }
-  });
-
-  const mailOptions = {
-    from: userEmail,
-    to: process.env.email_name,
-    subject: "CodingWithSandy - Inquiry",
-    text: `
-      From: ${userName}
-
-      ${userMessage}
-    `
-  };
-
-  transporter.sendMail(mailOptions, (error) => {
-    if (error) {
-      console.log(error);
-      res.json({ error: "There was an error sending your email. Contact site administrator." });
-    } else {
-      res.json({ success: "Thank you for contacting me. I will respond as soon as possible!" });
-    }
-  });
 });
 
 BigInt.prototype.toJSON = function () {
