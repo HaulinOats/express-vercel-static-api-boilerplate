@@ -101,6 +101,7 @@ app.post("/api/admin", async (req, res) => {
 });
 
 app.post("/api/message", (req, res) => {
+  console.log(req.body);
   const nodemailer = require("nodemailer");
 
   const userName = req.body.name;

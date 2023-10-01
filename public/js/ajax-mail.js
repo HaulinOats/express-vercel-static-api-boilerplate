@@ -2,69 +2,67 @@
   "use strict";
 
   $("#testBtn").on("click", () => {
-    $.ajax({
-      url: "/api/test",
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      data: JSON.stringify({ name: "Brett" })
-    })
-      .done((response) => {
-        console.log("success: ", response);
+    try {
+      fetch("/api/test", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name: "Brett" })
       })
-      .fail((data) => {
-        console.log("fail: ", data);
-      });
+        .then((resp) => resp.json())
+        .then((json) => {
+          console.log(json);
+        });
+    } catch (err) {
+      console.log(err);
+    }
   });
 
   var form = ".ajax-contact";
+  var formEl = document.querySelector(".ajax-contact");
   var invalidCls = "is-invalid";
   var $email = '[name="email"]';
   var $validation = '[name="name"],[name="email"],[name="message"]'; // Must be use (,) without any space
   var formMessages = $(".form-messages");
 
-  function sendContact() {
-    var formData = $(form).serialize();
+  async function sendContact() {
     var valid;
     valid = validateContact();
     if (valid) {
-      console.log({
-        url: $(form).attr("action"),
-        data: formData,
-        type: "POST"
-      });
-      jQuery
-        .ajax({
-          url: $(form).attr("action"),
-          data: formData,
-          type: "POST"
-        })
-        .done(function (response) {
-          // Make sure that the formMessages div has the 'success' class.
-          if (response.success) {
-            formMessages.removeClass("error");
-            formMessages.addClass("success");
-            // Clear the form.
-            $(form + ' input:not([type="submit"]),' + form + " textarea").val("");
-          } else if (response.error) {
-            // Make sure that the formMessages div has the 'error' class.
-            formMessages.removeClass("success");
-            formMessages.addClass("error");
-          }
-          formMessages.text(response.success);
-        })
-        .fail(function (data) {
+      try {
+        let formData = new FormData(document.querySelector(form));
+        const response = await fetch(formEl.getAttribute("action"), {
+          headers: {
+            "Content-Type": "application/json"
+          },
+          method: "POST",
+          body: JSON.stringify({
+            name: formData.get("name"),
+            email: formData.get("email"),
+            message: formData.get("message")
+          })
+        });
+        const result = await response.json();
+        if (result.success) {
+          formMessages.removeClass("error");
+          formMessages.addClass("success");
+          // Clear the form.
+          formEl.querySelectorAll(`input:not([type="submit"]), textarea`).forEach((el) => {
+            el.value = "";
+          });
+        } else if (result.error) {
           // Make sure that the formMessages div has the 'error' class.
           formMessages.removeClass("success");
           formMessages.addClass("error");
-          // Set the message text.
-          if (data.responseText !== "") {
-            formMessages.html(data.responseText);
-          } else {
-            formMessages.html("Oops! An error occurred and your message could not be sent.");
-          }
-        });
+        }
+        formMessages.text(result.success);
+      } catch (err) {
+        console.log(err);
+        formMessages.removeClass("success");
+        formMessages.addClass("error");
+        formMessages.html("Oops! An error occurred and your message could not be sent.");
+      }
     }
   }
 
