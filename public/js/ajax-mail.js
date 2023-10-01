@@ -32,7 +32,7 @@
     if (valid) {
       try {
         let formData = new FormData(document.querySelector(form));
-        const response = await fetch(formEl.getAttribute("action"), {
+        const response = await fetch("/api/message", {
           headers: {
             "Content-Type": "application/json"
           },

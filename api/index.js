@@ -8,13 +8,9 @@ app.post("/api/test", (req, res) => {
 });
 
 app.post("/api/message", (req, res) => {
-  res.setHeader("Content-Type", "application/json");
-  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
   const nodemailer = require("nodemailer");
 
-  const userName = req.body.name;
-  const userEmail = req.body.email;
-  const userMessage = req.body.message;
+  const { name, email, message } = req.body;
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -25,17 +21,19 @@ app.post("/api/message", (req, res) => {
   });
 
   const mailOptions = {
-    from: userEmail,
+    from: email,
     to: process.env.email_name,
     subject: "CodingWithSandy - Inquiry",
     text: `
-      From: ${userName}
+      From: ${name}
 
-      ${userMessage}
+      ${message}
     `
   };
 
   transporter.sendMail(mailOptions, (error) => {
+    res.setHeader("Content-Type", "application/json");
+    res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
     if (error) {
       res.json({ error: "There was an error sending your email. Contact site administrator." });
     } else {
