@@ -45,15 +45,14 @@
           if (response.success) {
             formMessages.removeClass("error");
             formMessages.addClass("success");
-            formMessages.text(response.msg);
             // Clear the form.
             $(form + ' input:not([type="submit"]),' + form + " textarea").val("");
           } else if (response.error) {
             // Make sure that the formMessages div has the 'error' class.
             formMessages.removeClass("success");
             formMessages.addClass("error");
-            formMessages.html(response.error);
           }
+          formMessages.text(response.success);
         })
         .fail(function (data) {
           // Make sure that the formMessages div has the 'error' class.

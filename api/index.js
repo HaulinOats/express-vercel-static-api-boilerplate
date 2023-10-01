@@ -1,15 +1,15 @@
 const app = require("express")();
 const retry = require("async-retry");
-const { createError } = require("micro");
-const { validatePaymentPayload } = require("../server/schema");
-const { ApiError, client: square } = require("../server/square");
-const logger = require("../server/logger");
 
-// app.get("/api/test", (req, res) => {
-//   res.json({ msg: "hello" });
-// });
+app.get("/api/test", (req, res) => {
+  res.json({ msg: "hello" });
+});
 
 app.post("/api/payment", async (req, res) => {
+  const { createError } = require("micro");
+  const { validatePaymentPayload } = require("../server/schema");
+  const { ApiError, client: square } = require("../server/square");
+
   //https://developer.squareup.com/docs/web-payments/take-card-payment
   let payload = {
     idempotencyKey: req.body.idempotencyKey,
@@ -25,7 +25,7 @@ app.post("/api/payment", async (req, res) => {
 
   await retry(async (bail, attempt) => {
     try {
-      logger.debug("Creating payment", { attempt });
+      console.info("Creating payment", { attempt });
 
       let payment = {
         idempotencyKey: payload.idempotencyKey,
@@ -56,11 +56,11 @@ app.post("/api/payment", async (req, res) => {
         payment.verificationToken = payload.verificationToken;
       }
 
-      // console.log(payment);
+      console.log(payment);
 
       const { result, statusCode } = await square.paymentsApi.createPayment(payment);
 
-      logger.info("Payment succeeded!", { result, statusCode });
+      console.info("Payment succeeded!", { result, statusCode });
 
       res.json({
         result,
@@ -101,7 +101,6 @@ app.post("/api/admin", async (req, res) => {
 });
 
 app.post("/api/message", (req, res) => {
-  console.log(req.body);
   const nodemailer = require("nodemailer");
 
   const userName = req.body.name;
@@ -129,6 +128,7 @@ app.post("/api/message", (req, res) => {
 
   transporter.sendMail(mailOptions, (error) => {
     if (error) {
+      console.log(error);
       res.json({ error: "There was an error sending your email. Contact site administrator." });
     } else {
       res.json({ success: "Thank you for contacting me. I will respond as soon as possible!" });
