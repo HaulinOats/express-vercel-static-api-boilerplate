@@ -86,6 +86,7 @@
         // create the editor
         (async () => {
             const container = document.getElementById("jsoneditor")
+            let newJSON = {};
             const options = {
                 mode: "form",
                 onChangeJSON(json) {
@@ -96,7 +97,7 @@
 
             // set json
             const initialJson = await fetch("https://json.extendsclass.com/bin/070e0707707e").then(result => result.json());
-            let newJSON = { ...initialJson };
+            newJSON = { ...initialJson }
             editor.set(initialJson);
             editor.expandAll();
 
@@ -108,17 +109,17 @@
             saveBtn.addEventListener("click", async (e) => {
                 loadingEl.classList.add('show');
                 try {
-                    const result = await fetch("/api/admin", {
+                    const request = await fetch("/api/admin", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
                             pin: pinInput.value,
-                            contentJSON: newJSON
+                            content: newJSON
                         })
                     });
-                    const response = await result.json();
+                    const response = await request.json();
                     if (response.success) {
                         errorEl.classList.remove("show");
                         successEl.classList.add("show");
