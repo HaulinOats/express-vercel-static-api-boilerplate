@@ -32,31 +32,34 @@
     if (valid) {
       try {
         let formData = new FormData(document.querySelector(form));
-        const response = await fetch("/api/message", {
+        fetch("/api/message", {
+          method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
-          method: "POST",
           body: JSON.stringify({
-            name: formData.get("name"),
-            email: formData.get("email"),
-            message: formData.get("message")
+            name: "brett",
+            email: "asdfl;jasdflkjasdfl",
+            message: "apsdfasdflasjdf"
           })
-        });
-        const result = await response.json();
-        if (result.success) {
-          formMessages.removeClass("error");
-          formMessages.addClass("success");
-          // Clear the form.
-          formEl.querySelectorAll(`input:not([type="submit"]), textarea`).forEach((el) => {
-            el.value = "";
+        })
+          .then((resp) => resp.json())
+          .then((json) => {
+            console.log(json);
+            if (json.success) {
+              formMessages.removeClass("error");
+              formMessages.addClass("success");
+              // Clear the form.
+              formEl.querySelectorAll(`input:not([type="submit"]), textarea`).forEach((el) => {
+                el.value = "";
+              });
+            } else if (json.error) {
+              // Make sure that the formMessages div has the 'error' class.
+              formMessages.removeClass("success");
+              formMessages.addClass("error");
+            }
+            formMessages.text(json.success);
           });
-        } else if (result.error) {
-          // Make sure that the formMessages div has the 'error' class.
-          formMessages.removeClass("success");
-          formMessages.addClass("error");
-        }
-        formMessages.text(result.success);
       } catch (err) {
         console.log(err);
         formMessages.removeClass("success");
