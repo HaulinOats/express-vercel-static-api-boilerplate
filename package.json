@@ -2,11 +2,6 @@
   "name": "codingwithsandy",
   "version": "1.0.0",
   "description": "Coding With Sandy CPC Certification",
-  "main": "api/index.js",
-  "scripts": {
-    "start": "vercel dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HaulinOats/CodingWithSandy.com.git"
