@@ -2,7 +2,8 @@ export default async function handler(request, response) {
   const { pin, content } = request.body;
   if (pin === process.env.content_pin) {
     try {
-      await fetch("https://json.extendsclass.com/bin/070e0707707e", {
+      // nocache param prevents caching of json
+      await fetch(`https://json.extendsclass.com/bin/070e0707707e?nocache=${new Date().getTime()}`, {
         method: "PUT",
         headers: {
           "Security-key": process.env.content_pin

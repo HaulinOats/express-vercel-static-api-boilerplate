@@ -1,8 +1,8 @@
-export default async function handler(request, response) {
-  const { createError } = require("micro");
-  const { validatePaymentPayload } = require("../server/schema");
-  const { ApiError, client: square } = require("../server/square");
+const { createError } = require("micro");
+const { validatePaymentPayload } = require("../server/schema");
+const { ApiError, client: square } = require("../server/square");
 
+export default async function handler(request, response) {
   //https://developer.squareup.com/docs/web-payments/take-card-payment
   let payload = {
     idempotencyKey: request.body.idempotencyKey,

@@ -2,7 +2,7 @@
 
 ### Technologies Used
 
-Site structure, styles, and base interactivity built using Medixi site template zip file purchased on ThemeForest. Base, pre-modified template zip file `medixi-html-template.zip` located in project root.
+Site structure, styles, and base interactivity built using Medixi site template zip file purchased on ThemeForest. Base, pre-modified template path: `backups/medixi-html-template.zip`.
 
 JSON Editor for editing site content at `/admin.html` route. This allows Sandy to modify site content without need for developer.
 
