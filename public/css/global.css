@@ -4,7 +4,7 @@
 .main .image-container .image {
     width:100px;
 }
-.main .header .home-link {
+nav .home-link {
     border-right: solid 1px black;
     padding-right: 5px;
 }

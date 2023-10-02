@@ -1,31 +1,10 @@
-# Coding With Sandy
+# Express Vercel Static Site with API Boilerplate
 
-### Technologies Used
+I created this boilerplate for those that want a super simple way of deploying a static Express server on Vercel that can make Serverless API function calls and return JSON responses. I've found this to be a useful template for building super simple websites or applications with free hosting. This also doesn't include any extra things like hot reloading, Typescript conversion, SASS, etc, so keep that in mind. Feel free to fork and add whatever additional configurations you want.
 
-- [Vercel](https://vercel.com/) for hosting
-- [ExpressJS](https://expressjs.com/) for NodeJS static file server: https://vercel.com/guides/using-express-with-vercel
-- [JSON Editor](https://github.com/josdejong/jsoneditor/blob/master/docs/api.md) for editing site content at `/admin.html` route
-- [Square](https://squareup.com/us/en) for receiving payments: https://squareup.com/us/en/payments
+Simply run `npx vercel dev` at the project root which will mimic your production settings on
+Vercel for linked project. No need to define `main` or `scripts` nodes in
+`package.json`.
 
-## Project Notes
-
-Site was built using the [Medixi Boostrap template](https://themeforest.net/item/medixi-health-medical-html-template/43617636) from Themeforest. Source zip files located in `/backups` folder. Static files exist in `/public`.
-
-[JSON Editor](https://github.com/josdejong/jsoneditor/blob/master/docs/api.md) library used for editing site content at `/admin` route (`public/admin.html`). This allows Sandy to modify site content without need for developer. [ExtendsClass.com](https://extendsclass.com/) provides an endpoint for hosting the JSON structure used for populating `course schedule` widget located on `schedule` and `signup` pages, and the `package` data in `payment` section of `signup` page. The json endpoint exists at: https://extendsclass.com/jsonstorage/070e0707707e and requires a security key to update: `srivera` sent via `Security-key` header (api documentation towards bottom of page). Admin functionality is directly embedded in `public/admin.html` and have it set to only allow Sandy to update node values (key changes are deactivated and setting `form` mode in options prevents ability to add or modify nodes). I opted for this approach for the sake of simplification and bypassing the need to implement a database. Backup of default JSON state is in `backups/content.json`. Environmental variable `content_pin` needs to match JSON security key `srivera` and `pin` input at bottom of page on `/admin` must be `srivera` in order for JSON to be updated. Makes api call to `api/admin.js` to validate entered pin and update JSON.
-
-`ajax-mail.js` handles in-site `contact` message form on home page which makes api call to `api/email.js`. `signup-handler.js` handles populating the `packages` dropdown and related table data on `signup` page. `schedule.js` handles building of course schedule on `schedule` and `signup` pages. `payment.js` take in payment form data on `signup` page and makes api call to `api/payment.js` which handles Square payment authentication.
-
-Environment variables will auto-populate in development when using `npx vercel dev`. `.env.sample` shows project environmental variables which are defined in Vercel project settings.
-
-Api routes exist in `/api` and make use of [Vercel Serverless functions with Express](https://vercel.com/guides/using-express-with-vercel).
-
-Simple pushing project to repository triggers auto-build on linked Vercel project.
-
-### TODO List to cover with Sandy:
-
-- Fill in content
-- Show how textbook links
-- Switch Gmail over to Sandy's business Gmail account
-- Switch Square over to Sandy's account from developer account
-- Setup Github and Vercel accounts to transfer site
-- Go over how to update content with pin and create account on extendsclass site (`https://extendsclass.com/jsonstorage/070e0707707e`)
+The `vercel.json` handles api requests via the `rewrites` node and
+`cleanUrls` node just makes it that html file extensions aren't included in route/url.

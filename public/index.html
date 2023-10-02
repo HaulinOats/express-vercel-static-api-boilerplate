@@ -4,28 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Express Vercel Static Site with API Boilerplate</title>
-    <link rel="stylesheet" href="./css/index.css" />
+    <title>Express Vercel Static Site with API Boilerplate - Home</title>
+    <link rel="stylesheet" href="./css/global.css" />
 </head>
 
 <body>
-    <img src="./img/express.png" />
-    <img src="./img/vercel.png" />
-    <h1>Express Vercel Static Site with API Boilerplate</h1>
-    <div>
-        <button id="getNameButton">Get Name</button>
-        <p id="getNameResponse"></p>
+    <div class="main">
+        <div class="image-container">
+            <img class="image" src="./img/express.png" />
+            <img class="image" src="./img/vercel.png" />
+        </div>
+        <nav>
+            <a class="link home-link" href="#">Home Page</a>
+            <a class="link message-link" href="message.html">Message Page</a>
+        </nav>
+        <p>I created this boilerplate for those that want a super simple way of deploying a static Express server on
+            Vercel that can make Serverless API function calls and return JSON responses. I've found this to be a useful
+            template for building super simple websites or applications with free hosting. This also doesn't include any
+            extra things like hot reloading, Typescript conversion, SASS, etc, so keep that in mind. Feel free to fork
+            and add whatever additional configurations you want.
+        </p>
+        <p>Simply run <code>npx vercel dev</code> at the project root which will mimic your production settings on
+            Vercel for linked project. No need to define <code>main</code> or <code>scripts</code> nodes in
+            <code>package.json</code>.
+        </p>
+        <p>The <code>vercel.json</code> handles api requests via the <code>rewrites</code> node and
+            <code>cleanUrls</code> node just makes it that html file extensions aren't included in route/url.
+        </p>
     </div>
-    <p>I created this boilerplate for those that want a simple way of deploying a static Express server that can make
-        Serverless API function calls. I've found this to be a useful template for building super simple websites or
-        applications. Feel free to fork and add whatever additional configurations you want.</p>
-    <p>Simply run <code>npx vercel dev</code> at the project root which will mimic your production settings on Vercel
-        for linked project. No need to define <code>main</code> or <code>scripts</code> nodes in
-        <code>package.json.</code>
-    </p>
-    <p><code>vercel.json</code> node <code>rewrites</code> handles api requests and <code>cleanUrls</code> node just
-        makes it that html file extensions aren't included in route/url.</p>
-    <script src="./js/index.js"></script>
 </body>
 
 </html>

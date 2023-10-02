@@ -1,0 +1,13 @@
+.main .success,
+.main .error {
+    display:none;
+}
+.main .success {
+    color:green;
+}
+.main .error {
+    color:red;
+}
+.main .show {
+    display:block;
+}
